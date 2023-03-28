@@ -13,14 +13,14 @@ namespace Monkey
         public override Bitmap Icon => null;
 
         //Return a short string describing the purpose of this GHA library.
-        public override string Description => "";
+        public override string Description => "Utility plugins";
 
         public override Guid Id => new Guid("69e1ddb9-1ff4-4442-b1b8-9af129e252c6");
 
         //Return a string identifying you or your company.
-        public override string AuthorName => "";
+        public override string AuthorName => "Zeke Zhang";
 
         //Return a string representing your preferred contact details.
-        public override string AuthorContact => "";
+        public override string AuthorContact => "sean1832725142@gmail.com";
     }
 }
