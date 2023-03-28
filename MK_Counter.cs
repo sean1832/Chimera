@@ -101,11 +101,7 @@ namespace Monkey
 
             if (run)
             {
-                if (counter == targetNum)
-                {
-                    ChangeInputToggle("Run", false);
-                }
-                else if (counter < targetNum)
+                if (counter < targetNum)
                 {
                     GrasshopperDocument.ScheduleSolution(interval, d =>
                     {
@@ -113,6 +109,10 @@ namespace Monkey
                         counter++;
                         Message = $"Count: {counter.ToString()} / {targetNum.ToString()}";
                     });
+                }
+                else
+                {
+                    ChangeInputToggle("Run", false);
                 }
             }
             else
