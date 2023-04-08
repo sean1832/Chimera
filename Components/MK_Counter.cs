@@ -8,7 +8,7 @@ using Rhino.Geometry;
 using Rhino.Render.DataSources;
 using Color = System.Drawing.Color;
 
-namespace Monkey
+namespace Monkey.Components
 {
     public class MK_Counter : GH_Component
     {
@@ -30,7 +30,7 @@ namespace Monkey
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddBooleanParameter("Run", "Run", "Executing the component", GH_ParamAccess.item, false);
             pManager.AddIntegerParameter("Start Number", "start #", "The number to start with.\nDefault 0.", GH_ParamAccess.item, 0);
@@ -38,17 +38,18 @@ namespace Monkey
                 "The maximum number to count until it is stopped.\nDefault 15", GH_ParamAccess.item, 15);
             pManager.AddIntegerParameter("Interval", "interval",
                 "The interval in millisecond (ms) between each count.\nDefault 150.", GH_ParamAccess.item, 150);
-;        }
+            ;
+        }
 
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddIntegerParameter("Count", "C", "Current count", GH_ParamAccess.item);
         }
 
-        
+
         /// <summary>
         /// This is the method that actually does the work.
         /// </summary>
@@ -58,7 +59,7 @@ namespace Monkey
             #region Variables
 
             Component = this;
-            GrasshopperDocument = this.OnPingDocument();
+            GrasshopperDocument = OnPingDocument();
 
             #endregion
 
@@ -183,7 +184,7 @@ namespace Monkey
                         if (toggle == null) continue;
                         if (toggle.Value == state) continue;
                         toggle.Value = state;
-                        
+
                         // re-computer to refresh
                         comp_obj.ExpireSolution(true);
                     }
