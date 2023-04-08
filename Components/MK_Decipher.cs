@@ -16,8 +16,8 @@ namespace Monkey.Components
         /// Initializes a new instance of the MK_Decipher class.
         /// </summary>
         public MK_Decipher()
-          : base("MK_Decipher", "Decipher",
-              "Get the hashcode of a cluster password",
+          : base("Decipher", "Decipher",
+              "Get the hashcode of a cluster password.\nTO USE: group the target cluster with this component.",
               "Monkey", "Utility")
         {
         }

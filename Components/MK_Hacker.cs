@@ -76,8 +76,8 @@ namespace Monkey.Components
         /// Initializes a new instance of the MK_Hacker class.
         /// </summary>
         public MK_Hacker()
-          : base("MK_Hacker", "Hacker",
-              "Hack a password protected cluster. Group the target cluster with this component.",
+          : base("Hacker", "Hacker",
+              "Hack a password protected cluster. \nTO USE: group the target cluster with this component.\n\nWARNING: Do not use for illegal purposes.",
               "Monkey", "Utility")
         {
         }
