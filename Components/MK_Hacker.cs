@@ -40,7 +40,7 @@ namespace Monkey.Components
 
             if (channel == GH_CanvasChannel.Objects)
             {
-                GH_Capsule button = GH_Capsule.CreateTextCapsule(ButtonBounds, ButtonBounds, GH_Palette.Black, "Refresh/Hack", 2, 0);
+                GH_Capsule button = GH_Capsule.CreateTextCapsule(ButtonBounds, ButtonBounds, GH_Palette.Black, "Hack", 2, 0);
                 button.Render(graphics, Selected, Owner.Locked, false);
                 button.Dispose();
             }
@@ -68,8 +68,8 @@ namespace Monkey.Components
 
         public void TriggerHack()
         {
-            ExpireSolution(true);
             hack = true;
+            ExpireSolution(true);
         }
 
         /// <summary>
@@ -125,9 +125,11 @@ namespace Monkey.Components
             if (clusters.Count == 0)
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "No target cluster detected. Group target cluster for cracking with this component.");
+                Message = "No cluster detected!";
+                return;
             }
 
-            if (hack && clusters.Count > 0)
+            if (hack)
             {
                 foreach (GH_Cluster cluster in clusters)
                 {
@@ -139,19 +141,22 @@ namespace Monkey.Components
 
                     // Replace current password with new hashcode
                     fields[0].SetValue(cluster, Convert.FromBase64String(hashcode));
-
-                    if (hashcode == "YfhFR2gfV6DIwQxPdvuHeg==")
-                    {
-                        infos.Add($"Cluster: {cluster.Name} password set to 'pass'.");
-                    }
-                    else
-                    {
-                        infos.Add($"Cluster: {cluster.Name} password set to hashcode equivalent {hashcode}.");
-                    }
                 }
+
+                if (hashcode == "YfhFR2gfV6DIwQxPdvuHeg==")
+                {
+                    infos.Add($"Cluster password set to 'pass'.");
+                }
+                else
+                {
+                    infos.Add($"Cluster password set to hashcode equivalent {hashcode}.");
+                }
+
                 MessageBox.Show("Cluster hacked.", "Hacking status", MessageBoxButtons.OK);
+                Message = "Hacked!";
+                hack = false;
             }
-            hack = false;
+            
 
             #region Outputs
 
