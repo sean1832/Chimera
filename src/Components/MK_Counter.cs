@@ -8,7 +8,7 @@ using Rhino.Geometry;
 using Rhino.Render.DataSources;
 using Color = System.Drawing.Color;
 
-namespace Monkey.Components
+namespace Monkey.src.Components
 {
     public class MK_Counter : GH_Component
     {

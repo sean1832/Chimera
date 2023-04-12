@@ -3,7 +3,7 @@ using Grasshopper.Kernel;
 using System;
 using System.Drawing;
 
-namespace Monkey
+namespace Monkey.src
 {
     public class MonkeyInfo : GH_AssemblyInfo
     {

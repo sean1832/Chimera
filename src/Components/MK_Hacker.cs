@@ -11,7 +11,7 @@ using Grasshopper.Kernel.Special;
 using Rhino.Geometry;
 
 
-namespace Monkey.Components
+namespace Monkey.src.Components
 {
     public class Attributes_Custom : Grasshopper.Kernel.Attributes.GH_ComponentAttributes
     {
@@ -85,7 +85,7 @@ namespace Monkey.Components
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Hashcode", "C", "Hash code of the target password to replace.\nDefault: pass",
                 GH_ParamAccess.item, "YfhFR2gfV6DIwQxPdvuHeg==");
@@ -94,7 +94,7 @@ namespace Monkey.Components
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Info", "I", "output messages", GH_ParamAccess.list);
         }
@@ -135,9 +135,9 @@ namespace Monkey.Components
                 {
                     // use reflection to access its private member fields
                     Type type = typeof(GH_Cluster);
-                    System.Reflection.FieldInfo[] fields = type.GetFields(
-                        System.Reflection.BindingFlags.NonPublic |
-                        System.Reflection.BindingFlags.Instance);
+                    FieldInfo[] fields = type.GetFields(
+                        BindingFlags.NonPublic |
+                        BindingFlags.Instance);
 
                     // Replace current password with new hashcode
                     fields[0].SetValue(cluster, Convert.FromBase64String(hashcode));
@@ -156,7 +156,7 @@ namespace Monkey.Components
                 Message = "Hacked!";
                 hack = false;
             }
-            
+
 
             #region Outputs
 

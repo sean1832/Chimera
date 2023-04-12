@@ -6,7 +6,7 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Rhino.Geometry;
 
-namespace Monkey.Components
+namespace Monkey.src.Components
 {
     public class MK_Decipher : GH_Component
     {
@@ -25,7 +25,7 @@ namespace Monkey.Components
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddBooleanParameter("Refresh", "Re", "Refresh this component", GH_ParamAccess.item, false);
         }
@@ -33,7 +33,7 @@ namespace Monkey.Components
         /// <summary>
         /// Registers all the output parameters for this component.
         /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Hashcode", "C", "Hashcode of target cluster password", GH_ParamAccess.item);
         }
@@ -77,7 +77,7 @@ namespace Monkey.Components
                 Message = "Deciphered!";
             }
 
-            
+
             // output
             DA.SetData(0, password);
         }
