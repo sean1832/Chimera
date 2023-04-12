@@ -6,10 +6,12 @@
     <Title>Monkey</Title>
     <Description>Description of Monkey</Description>
     <TargetExt>.gha</TargetExt>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Grasshopper" Version="7.13.21348.13001" IncludeAssets="compile;build" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   
   <ItemGroup>
@@ -39,7 +41,11 @@
   
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>D:\02-design\01-3D\01-Rhino\Rhino 7\System\Rhino.exe</StartProgram>
-    <StartArguments></StartArguments>
+    <StartArguments>
+		/runscript="_-RunScript (
+		Set GH = Rhino.GetPlugInObject(""Grasshopper"")
+		Call GH.OpenDocument(""E:\_repository\03-Grasshopper\plugin\Monkey\ExampleGHScript\Monkey.gh"")
+		)"</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
 
