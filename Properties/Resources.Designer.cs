@@ -83,9 +83,39 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Monkey___DLA_Crawl {
+            get {
+                object obj = ResourceManager.GetObject("Monkey___DLA_Crawl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey___DLA_Visualizer {
+            get {
+                object obj = ResourceManager.GetObject("Monkey___DLA_Visualizer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Monkey___Hacker {
             get {
                 object obj = ResourceManager.GetObject("Monkey - Hacker", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey___Simulation_Parameters {
+            get {
+                object obj = ResourceManager.GetObject("Monkey___Simulation_Parameters", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
