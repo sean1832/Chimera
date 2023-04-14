@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
+using Monkey.src.UI;
 using Rhino.Geometry;
 
 namespace Monkey.src.Components
@@ -27,7 +28,6 @@ namespace Monkey.src.Components
         /// </summary>
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddBooleanParameter("Refresh", "Re", "Refresh this component", GH_ParamAccess.item, false);
         }
 
         /// <summary>
@@ -82,6 +82,7 @@ namespace Monkey.src.Components
             DA.SetData(0, password);
         }
 
+        #region Additional
 
         /// <summary>
         /// Find all objects of type T in any group this current script instance is a member of.
@@ -112,6 +113,17 @@ namespace Monkey.src.Components
             return output;
         }
 
+        #endregion
+
+        private void Update()
+        {
+            ExpireSolution(false);
+        }
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Update", Update);
+        }
 
         /// <summary>
         /// Provides an Icon for the component.
