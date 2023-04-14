@@ -36,7 +36,7 @@ namespace Monkey.src.Components
                 GH_ParamAccess.item);
 
             // parameters
-            pManager.AddTextParameter("Simulation Attribute", "A", "Attributes to control the simulation.", GH_ParamAccess.item,
+            pManager.AddTextParameter("[]Simulation Attribute", "[]A", "Attributes to control the simulation.", GH_ParamAccess.item,
                 "{ \"interval\": 10, \"maxStep\": 200 }");
             pManager.AddNumberParameter("Scale", "S", "Scale of the branches.", GH_ParamAccess.item, 1);
 
