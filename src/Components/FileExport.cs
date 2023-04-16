@@ -40,10 +40,16 @@ namespace Monkey.src.Components
         public override void AddedToDocument(GH_Document document)
         {
             base.AddedToDocument(document);
-            ComponentInput input = new ComponentInput(document, this);
-            string[] extensions = { "\".fbx\" ", "\".obj\"" };
-            string[] extensionsFullname = { "Autodesk FBX", "Wavefront OBJ" };
-            input.CreateValueListAt(3, extensionsFullname, extensions, name: "Extension");
+            if (this.Params.Input[1].SourceCount != 0) return;
+
+            var input = new ComponentInput(document, this);
+
+            var filePathComponent = input.CreateCustomComponentAt<FilePath>(1, 0);
+            if (filePathComponent is FilePath filePath)
+            {
+                filePath.ChangeValueList("object");
+                filePath.ExpireSolution(true);
+            }
         }
 
 
@@ -54,10 +60,7 @@ namespace Monkey.src.Components
         {
             pManager.AddMeshParameter("Mesh", "M", "Mesh to export. Any breps or subd will be converted to mesh.",
                 GH_ParamAccess.list);
-            pManager.AddTextParameter("Directory", "D", "Directory for the geometry to export.", GH_ParamAccess.item);
-            pManager.AddTextParameter("Filename", "N", "File name for the exported geometry.", GH_ParamAccess.item);
-            pManager.AddTextParameter("File Extension", "E", "Extension of the mesh to export\n(.fbx .obj)",
-                GH_ParamAccess.item);
+            pManager.AddTextParameter("Path", "P", "Path to export.", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Bind", "B", "Export meshes as one file", GH_ParamAccess.item, true);
             pManager.AddBooleanParameter("Run", "RUN", "Execute the operation.", GH_ParamAccess.item, false);
 
@@ -78,21 +81,19 @@ namespace Monkey.src.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<Mesh> meshes = new List<Mesh>();
-            string extension = null;
-            string filename = null;
-            string directory = null;
+            string path = null;
             bool bind = false;
             bool run = false;
             if (!DA.GetDataList(0, meshes)) return;
-            if (!DA.GetData(1, ref directory)) return;
-            if (!DA.GetData(2, ref filename)) return;
-            if (!DA.GetData(3, ref extension)) return;
-            if (!DA.GetData(4, ref bind)) return;
-            if (!DA.GetData(5, ref run)) return;
+            if (!DA.GetData(1, ref path)) return;
+            if (!DA.GetData(2, ref bind)) return;
+            if (!DA.GetData(3, ref run)) return;
+
             List<string> info = new List<string>();
 
-            var bounds = this.Attributes.DocObject.Attributes.Bounds;
-            DA.SetData(1, bounds.ToString());
+            string directory = System.IO.Path.GetDirectoryName(path);
+            string filename = System.IO.Path.GetFileNameWithoutExtension(path);
+            string extension = System.IO.Path.GetExtension(path);
 
             if (run || runBut)
             {

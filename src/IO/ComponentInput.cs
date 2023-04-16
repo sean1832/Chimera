@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Grasshopper.Kernel;
 using System.ComponentModel;
+using Grasshopper.Kernel.Special;
+using Monkey.src.Components;
 
 namespace Monkey.src.InputComponents
 {
@@ -85,6 +87,38 @@ namespace Monkey.src.InputComponents
             return valueList;
         }
 
+        public GH_ActiveObject ChangeValueList(GH_ValueList valueList, string[] keys, string[] values)
+        {
+            valueList.ListItems.Clear();
+            for (int i = 0; i < keys.Length; i++)
+            {
+                valueList.ListItems.Add(new Grasshopper.Kernel.Special.GH_ValueListItem(keys[i], values[i]));
+            }
+            valueList.ExpireSolution(true);
+            return valueList;
+        }
+
+        public GH_ActiveObject CreateCustomComponentAt<T>(int inputIndex, int outputIndex, bool local = false) where T : GH_Component, new()
+        {
+            var customComponent = new T();
+            var pt = CreateOnCanvasAt(customComponent, inputIndex, local);
+            customComponent.CreateAttributes();
+
+            customComponent.Attributes.Pivot = pt;
+
+            Document.AddObject(customComponent, false);
+            // Connect the first output of the custom component to the input of the target component.
+            if (customComponent.Params.Output.Count > 0)
+            {
+                Component.Params.Input[inputIndex].AddSource(customComponent.Params.Output[outputIndex]);
+            }
+
+
+            return customComponent;
+        }
+
+
+
         /// <summary>
         /// Remove the source type at the specified index
         /// </summary>
@@ -130,8 +164,8 @@ namespace Monkey.src.InputComponents
             }
 
             int inputCount = Component.Params.Input.Count;
-            locX = locX - obj.Attributes.Bounds.Width - 100;
-            locY = locY - Component.Params.Input[index].Attributes.Bounds.Y + inputCount * 20;
+            locX = locX - obj.Attributes.Bounds.Width;
+            locY = locY - Component.Params.Input[index].Attributes.Bounds.Y + inputCount * 15;
 
             return new PointF(locX, locY);
         }
