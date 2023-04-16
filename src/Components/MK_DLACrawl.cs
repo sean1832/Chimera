@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Grasshopper.GUI;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
+using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
+using Monkey.src.InputComponents;
 using Monkey.src.UI;
 using Rhino.Collections;
 using Rhino.Geometry;
@@ -50,6 +53,7 @@ namespace Monkey.src.Components
         {
             pManager.AddCurveParameter("DLA Line", "Ln", "Output of DLA Lines.", GH_ParamAccess.item);
         }
+
 
         /// <summary>
         /// This is the method that actually does the work.
@@ -253,6 +257,7 @@ namespace Monkey.src.Components
         private bool run = false;
         private bool isAttractorWeightEnabled = false;
         private List<GH_ActiveObject> components = new List<GH_ActiveObject>();
+        List<GH_ActiveObject> generatedComponents = new List<GH_ActiveObject>();
 
         private void Run()
         {
@@ -364,38 +369,6 @@ namespace Monkey.src.Components
             return randomPoints;
         }
 
-        private void CreateSliderAndConnect(int index, double defaultVal, double min, double max)
-        {
-            var slider = new Grasshopper.Kernel.Special.GH_NumberSlider();
-            slider.CreateAttributes();
-            slider.Slider.Minimum = (decimal)min;
-            slider.Slider.Maximum = (decimal)max;
-
-            int inputCount = this.Params.Input.Count;
-            float locX = this.Attributes.DocObject.Attributes.Bounds.X;
-            float locY = this.Attributes.DocObject.Attributes.Bounds.Y;
-            locX = locX - slider.Attributes.Bounds.Width - 100;
-            locY = locY - this.Params.Input[index].Attributes.Bounds.Y + inputCount * 20;
-
-            slider.Attributes.Pivot = new PointF(locX, locY);
-            slider.SetSliderValue((decimal)defaultVal);
-            components.Add(slider);
-            OnPingDocument().AddObject(slider, false);
-            this.Params.Input[index].AddSource(slider);
-        }
-
-        private void RemoveSource(int index)
-        {
-            OnPingDocument().ScheduleSolution(0, (val) =>
-            {
-                foreach (var component in components)
-                {
-                    OnPingDocument().RemoveObject(component.Attributes, false);
-                }
-            });
-            
-            Params.Input[index].Sources.Clear();
-        }
         #endregion
 
 
@@ -428,19 +401,22 @@ namespace Monkey.src.Components
         public bool DestroyParameter(GH_ParameterSide side, int index) { return true; }
         public void VariableParameterMaintenance()
         {
+            ComponentInput input = new ComponentInput(OnPingDocument(), this);
             if (Util.InputHasData(this, 2))
             {
                 if (Params.Input.Count == 6) return;
                 Params.RegisterInputParam(CreateParameter(GH_ParameterSide.Input, 5));
                 isAttractorWeightEnabled = true;
+
                 
-                CreateSliderAndConnect(5, 0.1, 0.0, 1.0);
+                GH_ActiveObject slider = input.CreateSliderAt(5, 0.1, 0.0, 1.0, true);
+                generatedComponents.Add(slider);
                 ExpireSolution(true);
             }
             else
             {
                 if (Params.Input.Count != 6) return;
-                RemoveSource(5);
+                input.RemoveSourceTypeAt(5, generatedComponents);
                 Params.UnregisterInputParameter(Params.Input[5]);
                 isAttractorWeightEnabled = false;
             }
