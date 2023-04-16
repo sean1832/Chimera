@@ -12,7 +12,7 @@ namespace Monkey.src.Components
         /// Initializes a new instance of the FileSearch class.
         /// </summary>
         public FileSearch()
-          : base("FileSearch", "Search",
+          : base("File Search", "Search",
               "Search for files in a specified directory based on a given file name pattern.",
               "Monkey", "File")
         {
