@@ -63,16 +63,6 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___Counter {
-            get {
-                object obj = ResourceManager.GetObject("Monkey - Counter", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Monkey___Decipher {
             get {
                 object obj = ResourceManager.GetObject("Monkey - Decipher", resourceCulture);
@@ -116,6 +106,86 @@ namespace Monkey.Properties {
         internal static System.Drawing.Bitmap Monkey___Simulation_Parameters {
             get {
                 object obj = ResourceManager.GetObject("Monkey___Simulation_Parameters", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_ConstructPath {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_ConstructPath", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_Counter {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_Counter", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_DeconstructPath {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_DeconstructPath", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_FileExport {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_FileExport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_FileMove {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_FileMove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_FileSearch {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_FileSearch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_FileWrite {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_FileWrite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Monkey_Here {
+            get {
+                object obj = ResourceManager.GetObject("Monkey_Here", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
