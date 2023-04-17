@@ -35,7 +35,7 @@ namespace Monkey.src.InputComponents
         /// <param name="max">Slider maximum value</param>
         /// <param name="local">Is the spawn method local? Local mode does not append parent component pivot position.</param>
         /// <returns>Created component object</returns>
-        public GH_ActiveObject CreateSliderAt(int index, double defaultVal, double min, double max, bool local = false)
+        public GH_ActiveObject CreateSliderAt(int index, double defaultVal, double min, double max, int decimalPlace = 3, bool local = false, double offsetX = 0, double offsetY = 0)
         {
             if (Component.Params.Input[index].Sources.Count != 0) return null;
 
@@ -44,9 +44,10 @@ namespace Monkey.src.InputComponents
             slider.Slider.Minimum = (decimal)min;
             slider.Slider.Maximum = (decimal)max;
 
-            var pt = CreateOnCanvasAt(slider, index, local);
+            var pt = CreateOnCanvasAt(slider, index, local, offsetX, offsetY);
             slider.Attributes.Pivot = pt;
             slider.SetSliderValue((decimal)defaultVal);
+            slider.Slider.DecimalPlaces = decimalPlace;
 
             Document.AddObject(slider, false);
             Component.Params.Input[index].AddSource(slider);
@@ -63,7 +64,7 @@ namespace Monkey.src.InputComponents
         /// <param name="local">Is the spawn method local? Local mode does not append parent component pivot position.</param>
         /// <param name="name">Default component name</param>
         /// <returns>Created component object</returns>
-        public GH_ActiveObject CreateValueListAt(int index, string[] keys, string[] values, bool local = false, string name = "ValueList")
+        public GH_ActiveObject CreateValueListAt(int index, string[] keys, string[] values, bool local = false, double offsetX = 0, double offsetY = 0)
         {
             if (Component.Params.Input[index].Sources.Count != 0) return null;
 
@@ -75,9 +76,8 @@ namespace Monkey.src.InputComponents
                 valueList.ListItems.Add(new Grasshopper.Kernel.Special.GH_ValueListItem(keys[i], values[i]));
             }
             valueList.SelectItem(0);
-            valueList.Name = name;
 
-            var pt = CreateOnCanvasAt(valueList, index, local);
+            var pt = CreateOnCanvasAt(valueList, index, local, offsetX, offsetY);
             valueList.Attributes.Pivot = pt;
 
             
@@ -98,10 +98,10 @@ namespace Monkey.src.InputComponents
             return valueList;
         }
 
-        public GH_ActiveObject CreateCustomComponentAt<T>(int inputIndex, int outputIndex, bool local = false) where T : GH_Component, new()
+        public GH_ActiveObject CreateCustomComponentAt<T>(int inputIndex, int outputIndex, bool local = false, double offsetX = 0, double offsetY = 0) where T : GH_Component, new()
         {
             var customComponent = new T();
-            var pt = CreateOnCanvasAt(customComponent, inputIndex, local);
+            var pt = CreateOnCanvasAt(customComponent, inputIndex, local, offsetX, offsetY);
             customComponent.CreateAttributes();
 
             customComponent.Attributes.Pivot = pt;
@@ -125,13 +125,20 @@ namespace Monkey.src.InputComponents
             {
                 
                 GH_ActiveObject sourceObject = sourceParam.Attributes.GetTopLevel.DocObject as GH_ActiveObject;
-                if (sourceObject != null && sourceObject.GetType() == objectType || sourceObject.GetType() == typeof(GH_ProxyParameter))
+                if (sourceObject != null && sourceObject.GetType() == objectType)
                 {
                     sourceObjects.Add(sourceObject);
                 }
+                else if (sourceObject.GetType() == typeof(GH_ProxyParameter))
+                {
+                    // If the source is a proxy parameter, we need to skip.
+                    // When the gh document is load, all components are default to proxy parameters.
+                    continue;
+                }
                 else
                 {
-                    throw new Exception($"Source object is not of type {objectType.Name}");
+                    // If the source is not the specify type, we need to skip.
+                    continue;
                 }
             }
 
@@ -144,7 +151,7 @@ namespace Monkey.src.InputComponents
         /// </summary>
         /// <param name="index">The param index to remove</param>
         /// <param name="sourcesObj">List of objects to remove</param>
-        public void RemoveSourceTypeAt(int index, List<GH_ActiveObject> sourcesObj)
+        public void RemoveSourceObjects(int index, List<GH_ActiveObject> sourcesObj)
         {
             Document.ScheduleSolution(0, (val) =>
             {
@@ -166,7 +173,7 @@ namespace Monkey.src.InputComponents
         /// <param name="index">The parameter index of the parent component to connect to.</param>
         /// <param name="local">Is the spawn method local? Local mode does not append parent component pivot position.</param>
         /// <returns>Translated position</returns>
-        private PointF CreateOnCanvasAt(GH_ActiveObject obj, int index, bool local)
+        private PointF CreateOnCanvasAt(GH_ActiveObject obj, int index, bool local, double offsetX, double offsetY)
         {
             float locX;
             float locY;
@@ -184,8 +191,8 @@ namespace Monkey.src.InputComponents
             }
 
             int inputCount = Component.Params.Input.Count;
-            locX = locX - obj.Attributes.Bounds.Width;
-            locY = locY - Component.Params.Input[index].Attributes.Bounds.Y + inputCount * 15;
+            locX = locX - obj.Attributes.Bounds.Width + (float)offsetX;
+            locY = locY - Component.Params.Input[index].Attributes.Bounds.Y + inputCount * 15 - (float)offsetY;
 
             return new PointF(locX, locY);
         }
