@@ -19,7 +19,7 @@ namespace Monkey.src.Components
         /// Initializes a new instance of the FilePath class.
         /// </summary>
         public FilePath()
-          : base("Create Path", "Path",
+          : base("Construct Path", "Path",
               "Create a file path",
               "Monkey", "File")
         {
@@ -29,7 +29,7 @@ namespace Monkey.src.Components
         {
             get
             {
-                return new string[] { "create path", "path" };
+                return new string[] { "create path", "path", "constructpath", "createpath" };
             }
         }
 

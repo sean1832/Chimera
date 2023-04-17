@@ -40,6 +40,7 @@ namespace Monkey.src.Components
             if (filePathComponent is FilePath filePath)
             {
                 filePath.ChangeValueList("text");
+                filePath.category = "text";
                 filePath.ExpireSolution(true);
             }
 
