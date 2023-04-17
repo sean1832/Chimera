@@ -16,7 +16,7 @@ using Monkey.src.IO;
 
 namespace Monkey.src.Components
 {
-    public class MK_DLACrawl : GH_Component, IGH_VariableParameterComponent
+    public class MK_DLACrawl : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the MK_DLACrawl class.
@@ -42,8 +42,14 @@ namespace Monkey.src.Components
             pManager.AddTextParameter("[]Simulation Attribute", "[]A", "Attributes to control the simulation.", GH_ParamAccess.item,
                 "{ \"interval\": 10, \"maxStep\": 200 }");
             pManager.AddNumberParameter("Scale", "S", "Scale of the branches.", GH_ParamAccess.item, 1);
+            pManager.AddNumberParameter("Attractor Weight", "W",
+                "Determines the influence of an attractor on the growth pattern of a DLA curve. " +
+                "A higher value results in the DLA curve being more strongly drawn towards the attractor, " +
+                "while a lower value reduces its influence on the growth pattern.", GH_ParamAccess.item);
+
 
             pManager[2].Optional = true; // make the attractor curve optional
+            pManager[5].Optional = true; // make the attractor weight optional
         }
 
         /// <summary>
@@ -77,11 +83,8 @@ namespace Monkey.src.Components
             DA.GetData(2, ref attractor); // optional attractor input.
             if (!DA.GetData(3, ref simParams)) return;
             if (!DA.GetData(4, ref scale)) return;
-            if (isAttractorWeightEnabled)
-            {
-                DA.GetData(5, ref attractorWeight); // optional attractor input.
-            }
-            
+            DA.GetData(5, ref attractorWeight); // optional attractor input.
+
 
             JObject jsonObject = JObject.Parse(simParams);
             int interval = jsonObject["interval"].Value<int>();
@@ -255,9 +258,6 @@ namespace Monkey.src.Components
         private List<Line> calculatedLines = new List<Line>();
         private bool rerun = false;
         private bool run = false;
-        private bool isAttractorWeightEnabled = false;
-        private List<GH_ActiveObject> components = new List<GH_ActiveObject>();
-        List<GH_ActiveObject> generatedComponents = new List<GH_ActiveObject>();
 
         private void Run()
         {
@@ -376,50 +376,6 @@ namespace Monkey.src.Components
         public override void CreateAttributes()
         {
             m_attributes = new ComponentButton(this, "Simulate", Run);
-        }
-
-        protected override void AfterSolveInstance()
-        {
-            VariableParameterMaintenance();
-            Params.OnParametersChanged();
-        }
-
-        public IGH_Param CreateParameter(GH_ParameterSide side, int index)
-        {
-            return new Param_Number
-            {
-                Name = "Attractor Weight",
-                NickName = "W",
-                Description = "Determines the influence of an attractor on the growth pattern of a DLA curve. A higher value results in the DLA curve being more strongly drawn towards the attractor, while a lower value reduces its influence on the growth pattern.",
-                Access = GH_ParamAccess.item,
-                Optional = true
-            };
-        }
-
-        public bool CanInsertParameter(GH_ParameterSide side, int index) { return false; }
-        public bool CanRemoveParameter(GH_ParameterSide side, int index) { return false; }
-        public bool DestroyParameter(GH_ParameterSide side, int index) { return true; }
-        public void VariableParameterMaintenance()
-        {
-            ComponentInput input = new ComponentInput(OnPingDocument(), this);
-            if (Util.InputHasData(this, 2))
-            {
-                if (Params.Input.Count == 6) return;
-                Params.RegisterInputParam(CreateParameter(GH_ParameterSide.Input, 5));
-                isAttractorWeightEnabled = true;
-
-                
-                GH_ActiveObject slider = input.CreateSliderAt(5, 0.1, 0.0, 1.0, true);
-                generatedComponents.Add(slider);
-                ExpireSolution(true);
-            }
-            else
-            {
-                if (Params.Input.Count != 6) return;
-                input.RemoveSourceTypeAt(5, generatedComponents);
-                Params.UnregisterInputParameter(Params.Input[5]);
-                isAttractorWeightEnabled = false;
-            }
         }
 
         /// <summary>
