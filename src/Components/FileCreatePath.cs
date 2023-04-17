@@ -29,7 +29,7 @@ namespace Monkey.src.Components
         {
             get
             {
-                return new string[] { "create path", "path", "constructpath", "createpath" };
+                return new string[] { "create path", "path", "constructpath", "createpath", "constructpath" };
             }
         }
 
@@ -147,6 +147,7 @@ namespace Monkey.src.Components
 
             this.Params.Input[0].Optional = true;
             this.Params.Input[1].Optional = true;
+            this.Params.Input[2].Optional = true;
 
         }
 
