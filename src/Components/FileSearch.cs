@@ -17,6 +17,9 @@ namespace Monkey.src.Components
               "Monkey", "File")
         {
         }
+
+        public override GH_Exposure Exposure => GH_Exposure.secondary;
+
         /// <summary>
         /// Overrides the Description property to include the desired keywords.
         /// </summary>

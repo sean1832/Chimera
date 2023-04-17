@@ -21,6 +21,8 @@ namespace Monkey.src.Components
         {
         }
 
+        public override GH_Exposure Exposure => GH_Exposure.tertiary;
+
         public override IEnumerable<string> Keywords
         {
             get
