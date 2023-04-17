@@ -79,20 +79,16 @@ namespace Monkey.src.Components
             if (Params.Input[2].SourceCount > 0)
             {
                 List<GH_ActiveObject> sourceObjects = new List<GH_ActiveObject>();
-
-                foreach (IGH_Param sourceParam in Params.Input[2].Sources)
+                try
                 {
-                    GH_ActiveObject sourceObject = sourceParam.Attributes.GetTopLevel.DocObject as GH_ActiveObject;
-                    if (sourceObject != null && sourceObject is GH_ValueList)
-                    {
-                        sourceObjects.Add(sourceObject);
-                    }
-                    else
-                    {
-                        AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "One of the connected objects is not a GH_ActiveObject.");
-                    }
+                    sourceObjects = input.GetSourceObjects(2, typeof(GH_ValueList));
                 }
-
+                catch (Exception e)
+                {
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Error, $"Error: {e}");
+                    return;
+                }
+                
                 foreach (var ghActiveObject in sourceObjects)
                 {
                     if (ghActiveObject is GH_ValueList)

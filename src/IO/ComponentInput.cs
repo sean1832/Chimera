@@ -118,6 +118,26 @@ namespace Monkey.src.InputComponents
         }
 
 
+        public List<GH_ActiveObject> GetSourceObjects(int index, Type objectType)
+        {
+            List<GH_ActiveObject> sourceObjects = new List<GH_ActiveObject>();
+            foreach (IGH_Param sourceParam in Component.Params.Input[index].Sources)
+            {
+                
+                GH_ActiveObject sourceObject = sourceParam.Attributes.GetTopLevel.DocObject as GH_ActiveObject;
+                if (sourceObject != null && sourceObject.GetType() == objectType || sourceObject.GetType() == typeof(GH_ProxyParameter))
+                {
+                    sourceObjects.Add(sourceObject);
+                }
+                else
+                {
+                    throw new Exception($"Source object is not of type {objectType.Name}");
+                }
+            }
+
+            return sourceObjects;
+        }
+
 
         /// <summary>
         /// Remove the source type at the specified index
