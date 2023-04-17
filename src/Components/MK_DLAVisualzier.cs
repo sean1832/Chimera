@@ -53,12 +53,12 @@ namespace Monkey.src.Components
                 {
                     paramList.Add(i);
                 }
-                GH_Operations operations = new GH_Operations(this);
+                GH_Operations operations = new GH_Operations(OnPingDocument(), this);
                 paramList = operations.NormalizeList(paramList);
 
                 foreach (var t in paramList)
                 {
-                    remaped.Add(GH_Operations.Remap(t, 0, 1, 7, 1));
+                    remaped.Add(operations.Remap(t, 0, 1, 7, 1));
                 }
             }
             else

@@ -162,7 +162,7 @@ namespace Monkey.src.Components
 
             if (run)
             {
-
+                GH_Operations operations = new GH_Operations(OnPingDocument(), this);
                 if (count < maxStep)
                 {
                     if (rerun)
@@ -188,9 +188,9 @@ namespace Monkey.src.Components
                         }
 
                         // populate the mesh with points
-                        List<Point3d> populatedPts = PopulateMesh(inGeo, 1, SeedGenerator(count));
+                        List<Point3d> populatedPts = operations.PopulateMesh(inGeo, 1, operations.RandomGenerator(count, 0, 700));
                         Point3d populatedPt = populatedPts[0];
-                        Point3d closestPt = GetClosestPoint(populatedPt, calculatedLines);
+                        Point3d closestPt = operations.GetClosestPoint(populatedPt, calculatedLines);
 
 
                         // base dla direction
@@ -218,15 +218,15 @@ namespace Monkey.src.Components
                                 Point3d centerPt = line.PointAt(0.5);
                                 atrCenterPts.Add(centerPt);
                             }
-
+                            
                             // find closest attractor
                             int atrCPIndex;
                             double atrCPDist;
-                            GetClosestPoint(closestPt, atrCenterPts, out atrCPIndex, out atrCPDist);
+                            operations.GetClosestPoint(closestPt, atrCenterPts, out atrCPIndex, out atrCPDist);
                             Vector3d closestAtrSegmentDirection = atrSegmentLines[atrCPIndex].Direction;
                             closestAtrSegmentDirection.Unitize();
-                            double t = GH_Operations.Remap(atrCPDist, 0, 52, 0, 1);
-                            double bezierMultiplier = GH_Operations.Bezier(t, 1.0, 0.8, 0.2, 0) * attractorWeight;
+                            double t = operations.Remap(atrCPDist, 0, 52, 0, 1);
+                            double bezierMultiplier = operations.Bezier(t, 1.0, 0.8, 0.2, 0) * attractorWeight;
 
                             // add vector together
                             finalDir = baseDir * (1 - bezierMultiplier) + closestAtrSegmentDirection * bezierMultiplier * scale;
@@ -239,7 +239,7 @@ namespace Monkey.src.Components
                         // pull point back to mesh
                         Point3d closestPtAdjusted = closestPt;
                         closestPtAdjusted.Transform(Transform.Translation(finalDir));
-                        Point3d meshClosestPoint = GetClosestPoint(closestPtAdjusted, inGeo);
+                        Point3d meshClosestPoint = operations.GetClosestPoint(closestPtAdjusted, inGeo);
 
 
                         // create line
@@ -283,105 +283,6 @@ namespace Monkey.src.Components
         {
             calculatedLines.Clear();
             count = 0;
-        }
-
-        Point3d GetClosestPoint(Point3d targetPoint, List<Line> lines)
-        {
-            Point3dList pointList = new Point3dList();
-
-            foreach (Line line in lines)
-            {
-                Point3d currentClosestPoint = line.ClosestPoint(targetPoint, true);
-                pointList.Add(currentClosestPoint);
-            }
-
-            int index = pointList.ClosestIndex(targetPoint);
-            Point3d closestPoint = pointList[index];
-            return closestPoint;
-        }
-
-        Point3d GetClosestPoint(Point3d targetPoint, Mesh mesh)
-        {
-            Point3d closestPoint = Point3d.Unset;
-            Vector3d normal;
-            mesh.ClosestPoint(targetPoint, out closestPoint, out normal, double.MaxValue);
-            return closestPoint;
-        }
-
-
-
-        private Point3d GetClosestPoint(Point3d targetPt, List<Point3d> cloudPts, out int index, out double distance)
-        {
-            index = Point3dList.ClosestIndexInList(cloudPts, targetPt);
-            if (index == -1)
-            {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Closest Point index out of range.");
-            }
-            distance = targetPt.DistanceTo(cloudPts[index]);
-            return cloudPts[index];
-        }
-
-        private int SeedGenerator(int seed)
-        {
-            Random rnd = new Random(seed);
-            return rnd.Next(0, 700);
-        }
-
-        /// <summary>
-        /// Populate a mesh geometry with points
-        /// </summary>
-        /// <param name="inputMesh">mesh to populate</param>
-        /// <param name="num">numbers of points</param>
-        /// <param name="seed">seed value</param>
-        /// <returns>list of randomly populated points on geometry</returns>
-        private List<Point3d> PopulateMesh(Mesh inputMesh, int num, int seed = -1)
-        {
-            List<Point3d> randomPoints = new List<Point3d>();
-
-            Random random = seed == -1 ? new Random(seed) : new Random(); // if seed exist, add seed to random. Else fully random.
-            
-            inputMesh.FaceNormals.ComputeFaceNormals();
-            inputMesh.Normals.ComputeNormals();
-
-            for (int i = 0; i < num; i++)
-            {
-                int faceIndex = random.Next(inputMesh.Faces.Count);
-                MeshFace face = inputMesh.Faces[faceIndex];
-
-                Point3d A = inputMesh.Vertices[face.A];
-                Point3d B = inputMesh.Vertices[face.B];
-                Point3d C = inputMesh.Vertices[face.C];
-                Point3d D = face.IsTriangle ? C : inputMesh.Vertices[face.D];
-
-                double u = random.NextDouble();
-                double v = random.NextDouble();
-
-                if (u + v > 1)
-                {
-                    u = 1 - u;
-                    v = 1 - v;
-                }
-
-                Point3d randomPoint = A + u * (B - A) + v * (C - A);
-
-                if (!face.IsTriangle)
-                {
-                    double w = random.NextDouble();
-
-                    if (u + v + w > 1)
-                    {
-                        u = 1 - u;
-                        v = 1 - v;
-                        w = 1 - w;
-                    }
-
-                    randomPoint += w * (D - A);
-                }
-
-                randomPoints.Add(randomPoint);
-            }
-
-            return randomPoints;
         }
 
         #endregion
