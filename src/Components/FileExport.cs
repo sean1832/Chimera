@@ -43,8 +43,8 @@ namespace Monkey.src.Components
             if (this.Params.Input[1].SourceCount != 0) return;
 
             var input = new ComponentInput(document, this);
-            var filePathComponent = input.CreateCustomComponentAt<FilePath>(1, 0);
-            if (filePathComponent is FilePath filePath)
+            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0);
+            if (filePathComponent is FileCreatePath filePath)
             {
                 filePath.ChangeValueList("object");
                 filePath.category = "object";

@@ -13,13 +13,13 @@ using Rhino.Runtime.RhinoAccounts;
 
 namespace Monkey.src.Components
 {
-    public class FilePath : GH_Component
+    public class FileCreatePath : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the FilePath class.
         /// </summary>
-        public FilePath()
-          : base("Construct Path", "Path",
+        public FileCreatePath()
+          : base("Create Path", "Path",
               "Create a file path",
               "Monkey", "File")
         {
