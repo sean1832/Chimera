@@ -45,7 +45,7 @@ namespace Monkey.src.Components
             pManager.AddNumberParameter("Attractor Weight", "W",
                 "Determines the influence of an attractor on the growth pattern of a DLA curve. " +
                 "A higher value results in the DLA curve being more strongly drawn towards the attractor, " +
-                "while a lower value reduces its influence on the growth pattern.", GH_ParamAccess.item);
+                "while a lower value reduces its influence on the growth pattern.", GH_ParamAccess.item, 0.1);
 
 
             pManager[2].Optional = true; // make the attractor curve optional
@@ -140,6 +140,21 @@ namespace Monkey.src.Components
                 DA.AbortComponentSolution();
                 return;
             }
+
+            if (scale == 0)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Scale multiplier cannot be zero!");
+                DA.AbortComponentSolution();
+                return;
+            }
+
+            if (hasAttrCrv && attractorWeight == 0)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Attractor weight cannot be zero!");
+                DA.AbortComponentSolution();
+                return;
+            }
+
 
             #endregion
 
