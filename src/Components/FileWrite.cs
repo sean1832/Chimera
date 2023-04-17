@@ -51,7 +51,7 @@ namespace Monkey.src.Components
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Content", "C", "Content to write to file.", GH_ParamAccess.item);
-            pManager.AddTextParameter("Path", "P", "File path to write.", GH_ParamAccess.item);
+            pManager.AddTextParameter("[]Path", "[]P", "File path to write.", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Write", "W", "Write content to file.", GH_ParamAccess.item, false);
         }
 

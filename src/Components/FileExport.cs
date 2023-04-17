@@ -43,7 +43,6 @@ namespace Monkey.src.Components
             if (this.Params.Input[1].SourceCount != 0) return;
 
             var input = new ComponentInput(document, this);
-
             var filePathComponent = input.CreateCustomComponentAt<FilePath>(1, 0);
             if (filePathComponent is FilePath filePath)
             {
@@ -60,7 +59,7 @@ namespace Monkey.src.Components
         {
             pManager.AddMeshParameter("Mesh", "M", "Mesh to export. Any breps or subd will be converted to mesh.",
                 GH_ParamAccess.list);
-            pManager.AddTextParameter("Path", "P", "Path to export.", GH_ParamAccess.item);
+            pManager.AddTextParameter("[]Path", "[]P", "Path to export.", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Bind", "B", "Export meshes as one file", GH_ParamAccess.item, true);
             pManager.AddBooleanParameter("Run", "RUN", "Execute the operation.", GH_ParamAccess.item, false);
 
