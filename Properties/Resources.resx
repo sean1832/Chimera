@@ -148,6 +148,9 @@
   <data name="Monkey_Here" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Monkey_Here.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Monkey_PolyMesh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Monkey_PolyMesh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Monkey___DLA_Crawl" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Monkey - DLA_Crawl.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
