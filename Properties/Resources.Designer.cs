@@ -83,6 +83,16 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CullNull {
+            get {
+                object obj = ResourceManager.GetObject("CullNull", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CurveContainment {
             get {
                 object obj = ResourceManager.GetObject("CurveContainment", resourceCulture);
