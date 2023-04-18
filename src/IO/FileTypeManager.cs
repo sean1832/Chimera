@@ -37,21 +37,6 @@ namespace Monkey.src.IO
                 new FileTypeInfo { FullName = "3D Studio (.3ds)", Extension = @""".3ds""" },
                 new FileTypeInfo { FullName = "Collada (.dae)", Extension = @""".dae""" }
             });
-
-
-            fileCategories.Add("image", new List<FileTypeInfo>
-            {
-                new FileTypeInfo { FullName = "JPEG Image", Extension = "\".jpg\"" },
-                new FileTypeInfo { FullName = "PNG Image", Extension = "\".png\"" },
-                new FileTypeInfo { FullName = "GIF Image", Extension = "\".gif\"" }
-            });
-
-            fileCategories.Add("audio", new List<FileTypeInfo>
-            {
-                new FileTypeInfo { FullName = "MP3 Audio", Extension = "\".mp3\"" },
-                new FileTypeInfo { FullName = "WAV Audio", Extension = "\".wav\"" },
-                new FileTypeInfo { FullName = "OGG Audio", Extension = "\".ogg\"" }
-            });
         }
 
         public Dictionary<string, List<FileTypeInfo>> GetAllCategories()
