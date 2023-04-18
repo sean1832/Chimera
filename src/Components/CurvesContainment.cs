@@ -21,7 +21,7 @@ namespace Monkey.src.Components
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "containcurve", "contain curve", "crvcontain" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.CurveContainment; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("3a2c7cb5-70da-4401-8ce5-efe8630d2111");
 
         #endregion

@@ -20,7 +20,7 @@ namespace Monkey.src.Components
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "layername", "getlayername" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.Layer_Name; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("0f49af08-6400-4c6b-b123-0a062a94bbe4");
 
         #endregion

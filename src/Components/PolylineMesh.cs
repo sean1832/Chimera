@@ -24,7 +24,7 @@ namespace Monkey.src.Components
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "polylinemesh", "polylinemesh" };
         public override Guid ComponentGuid => new Guid("7E65648F-386D-49DF-AC3E-1125A0020331");
-        protected override System.Drawing.Bitmap Icon => null;
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.PolyMesh;
 
         /// <summary>
         /// Registers all the input parameters for this component.

@@ -17,7 +17,7 @@ namespace Monkey.src.Components
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "origin" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.Origin; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("87342fff-d04e-4c00-83f5-f6236046e5f8");
 
         #endregion

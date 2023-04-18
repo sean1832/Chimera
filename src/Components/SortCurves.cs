@@ -17,7 +17,7 @@ namespace Monkey.src.Components
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "sortcrv", "sortcrvbydirection" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.SortByDirection; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("1808ae91-ccf7-4706-ad52-c7c49feb2c64");
 
         #endregion
