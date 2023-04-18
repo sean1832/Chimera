@@ -9,12 +9,12 @@ using Newtonsoft.Json.Linq;
 
 namespace Monkey.src.Components
 {
-    public class MK_SimulationParam : GH_Component
+    public class SimulationParam : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the MK_SimulationParam class.
         /// </summary>
-        public MK_SimulationParam()
+        public SimulationParam()
           : base("Simulation Attributes", "Attributes",
               "Simulation attributes for Monkey.",
               "Monkey", "Utility")

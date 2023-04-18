@@ -6,12 +6,12 @@ using Rhino.Geometry;
 
 namespace Monkey.src.Components
 {
-    public class MK_DLAVisualzier : GH_Component
+    public class DLAVisualzier : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the DLAVisualzier class.
         /// </summary>
-        public MK_DLAVisualzier()
+        public DLAVisualzier()
           : base("DLA Visualzier", "Visualizer",
               "Visualization data from DLA lines. Plug with a lineweight preview.",
               "Monkey", "DLA")

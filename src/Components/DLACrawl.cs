@@ -16,12 +16,12 @@ using Monkey.src.IO;
 
 namespace Monkey.src.Components
 {
-    public class MK_DLACrawl : GH_Component
+    public class DLACrawl : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the MK_DLACrawl class.
         /// </summary>
-        public MK_DLACrawl()
+        public DLACrawl()
           : base("DLA Crawl", "DLA",
               "Diffusion Limited Aggregation walk on mesh surface. Attach a trigger to run.",
               "Monkey", "DLA")

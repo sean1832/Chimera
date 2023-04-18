@@ -2,23 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using Eto.Forms;
+using Grasshopper.GUI;
+using Grasshopper.GUI.Canvas;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Special;
 using Monkey.src.UI;
 using Rhino.Geometry;
 
+
 namespace Monkey.src.Components
 {
-    public class MK_Decipher : GH_Component
+    public class Hacker : GH_Component
     {
         private GH_Document GrasshopperDocument;
         private IGH_Component Component;
+        private bool hack;
+
+        public void Hack()
+        {
+            hack = true;
+            ExpireSolution(true);
+        }
+
         /// <summary>
-        /// Initializes a new instance of the MK_Decipher class.
+        /// Initializes a new instance of the MK_Hacker class.
         /// </summary>
-        public MK_Decipher()
-          : base("Decipher", "Decipher",
-              "Get the hashcode of a cluster password.\nTO USE: group the target cluster with this component.",
+        public Hacker()
+          : base("Hacker", "Hacker",
+              "Hack a password protected cluster. \nTO USE: group the target cluster with this component.\n\nWARNING: Do not use for illegal purposes.",
               "Monkey", "Utility")
         {
         }
@@ -28,6 +41,8 @@ namespace Monkey.src.Components
         /// </summary>
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
+            pManager.AddTextParameter("Hashcode", "C", "Hash code of the target password to replace.\nDefault: pass",
+                GH_ParamAccess.item, "YfhFR2gfV6DIwQxPdvuHeg==");
         }
 
         /// <summary>
@@ -35,7 +50,7 @@ namespace Monkey.src.Components
         /// </summary>
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Hashcode", "C", "Hashcode of target cluster password", GH_ParamAccess.item);
+            pManager.AddTextParameter("Info", "I", "output messages", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -44,10 +59,20 @@ namespace Monkey.src.Components
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            #region Variables
+
             Component = this;
             GrasshopperDocument = OnPingDocument();
+            List<string> infos = new List<string>();
+            #endregion
 
-            string password = string.Empty;
+            #region Inputs
+
+            string hashcode = string.Empty;
+
+            if (!DA.GetData(0, ref hashcode)) return;
+
+            #endregion
 
             // get all cluster objects that grouped with this component
             List<GH_Cluster> clusters = FindObjectsOfTypeInCurrentGroup<GH_Cluster>();
@@ -58,31 +83,42 @@ namespace Monkey.src.Components
                 return;
             }
 
-            foreach (GH_Cluster cluster in clusters)
+            if (hack)
             {
-                // use reflection to access its private member fields
-                Type type = typeof(GH_Cluster);
-                System.Reflection.FieldInfo[] fields = type.GetFields(
-                    System.Reflection.BindingFlags.NonPublic |
-                    System.Reflection.BindingFlags.Instance);
-
-                // get cluster password hashcode
-                byte[] passwordBytes = (byte[])fields[0].GetValue(cluster);
-                if (passwordBytes == null)
+                foreach (GH_Cluster cluster in clusters)
                 {
-                    Message = "Password is empty!";
-                    return;
+                    // use reflection to access its private member fields
+                    Type type = typeof(GH_Cluster);
+                    FieldInfo[] fields = type.GetFields(
+                        BindingFlags.NonPublic |
+                        BindingFlags.Instance);
+
+                    // Replace current password with new hashcode
+                    fields[0].SetValue(cluster, Convert.FromBase64String(hashcode));
                 }
-                password = Convert.ToBase64String(passwordBytes);
-                Message = "Deciphered!";
+
+                if (hashcode == "YfhFR2gfV6DIwQxPdvuHeg==")
+                {
+                    infos.Add($"Cluster password set to 'pass'.");
+                }
+                else
+                {
+                    infos.Add($"Cluster password set to hashcode equivalent {hashcode}.");
+                }
+
+                MessageBox.Show("Cluster hacked.", "Hacking status", MessageBoxButtons.OK);
+                Message = "Hacked!";
+                hack = false;
             }
 
 
-            // output
-            DA.SetData(0, password);
-        }
+            #region Outputs
 
-        #region Additional
+            // output
+            DA.SetDataList(0, infos);
+
+            #endregion
+        }
 
         /// <summary>
         /// Find all objects of type T in any group this current script instance is a member of.
@@ -113,18 +149,6 @@ namespace Monkey.src.Components
             return output;
         }
 
-        #endregion
-
-        private void Update()
-        {
-            ExpireSolution(false);
-        }
-
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "Update", Update);
-        }
-
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>
@@ -134,16 +158,20 @@ namespace Monkey.src.Components
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.Monkey___Decipher;
+                return Properties.Resources.Monkey___Hacker;
             }
         }
 
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Hack", Hack);
+        }
         /// <summary>
         /// Gets the unique ID for this component. Do not change this ID after release.
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("594F37F4-7259-4FEB-8048-B5E2BA17CFC2"); }
+            get { return new Guid("281A572A-50AD-4F49-A21E-1C6EBB74F674"); }
         }
     }
 }

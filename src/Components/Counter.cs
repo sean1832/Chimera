@@ -10,12 +10,12 @@ using Color = System.Drawing.Color;
 
 namespace Monkey.src.Components
 {
-    public class MK_Counter : GH_Component
+    public class Counter : GH_Component
     {
         /// <summary>
         /// Initializes a new instance of the MyComponent1 class.
         /// </summary>
-        public MK_Counter()
+        public Counter()
           : base("MK_Counter", "Counter",
               "Count number at a given range",
               "Monkey", "Utility")
