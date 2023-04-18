@@ -90,11 +90,5 @@ namespace Monkey.src.Components
             
             DA.SetData(0, mesh);
         }
-
-        #region MyRegion
-
-        
-
-        #endregion
     }
 }
