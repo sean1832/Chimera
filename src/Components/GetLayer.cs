@@ -3,6 +3,7 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Grasshopper.Kernel.Types;
 using Rhino;
 using Rhino.DocObjects;
 
@@ -13,13 +14,13 @@ namespace Monkey.src.Components
         #region Metadata
 
         public GetLayer()
-          : base("GetLayer", "GetLayer",
+          : base("GetLayerName", "GetLayer",
               "Get reference object layer name",
               "Monkey", "Utility")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
-        public override IEnumerable<string> Keywords => new string[] { "layername", "getlayername" };
+        public override IEnumerable<string> Keywords => new string[] { "layername", "getlayername", "layer name" };
         protected override System.Drawing.Bitmap Icon => Properties.Resources.Layer_Name; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("0f49af08-6400-4c6b-b123-0a062a94bbe4");
 
@@ -34,8 +35,8 @@ namespace Monkey.src.Components
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddTextParameter("Layer Name", "Name", "The full name of the layer the geometry belongs to.", GH_ParamAccess.item);
-            pManager.AddTextParameter("Base Name", "BaseName", "The base name of the layer without its parent.", GH_ParamAccess.item);
+            pManager.AddTextParameter("Layer Path", "Path", "The full name of the layer the geometry belongs to.", GH_ParamAccess.item);
+            pManager.AddTextParameter("Layer Name", "Name", "The base name of the layer without its parent.", GH_ParamAccess.item);
         }
 
         #endregion
@@ -43,41 +44,46 @@ namespace Monkey.src.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            GeometryBase inputGeometry = null;
-            if (!DA.GetData(0, ref inputGeometry)) return;
+            IGH_GeometricGoo goo = null;
+            if (!DA.GetData(0, ref goo)) return;
+            if (goo == null) return;
 
-            RhinoDoc doc = Rhino.RhinoDoc.ActiveDoc;
-            string layerName = GetGeometryLayerName(doc, inputGeometry);
+            if (!goo.IsReferencedGeometry)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Geometry is not referenced and therefore doesn't have attributes.");
+                return;
+            }
 
-            if (!string.IsNullOrEmpty(layerName))
+            Guid id = goo.ReferenceID;
+            if (id == Guid.Empty)
             {
-                DA.SetData(0, layerName);
-                string ayerName = layerName.Split(new string[] { "::" }, StringSplitOptions.None).Last();
-                DA.SetData(1, ayerName);
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Reference ID is blank.");
+                return;
             }
-            else
+
+            ObjRef objRef = new ObjRef(id);
+            if (objRef.Object() == null)
             {
-                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Could not find the layer name for the input geometry.\nIs the input geometry baked into rhino?");
-                DA.SetData(0, string.Empty);
-                DA.SetData(1, string.Empty);
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Referenced object no longer exists in the current document.");
+                return;
             }
+
+            if (objRef.Object().Document == null)
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Referenced object is not associated with a document.");
+                return;
+            }
+
+            RhinoDoc doc = RhinoDoc.ActiveDoc;
+            RhinoObject obj = objRef.Object();
+            string fullPath = doc.Layers[obj.Attributes.LayerIndex].FullPath;
+            string layerName = doc.Layers[obj.Attributes.LayerIndex].Name;
+
+            DA.SetData(0, fullPath);
+            DA.SetData(1, layerName);
         }
 
         #region Additional
-
-        private string GetGeometryLayerName(RhinoDoc doc, GeometryBase geometry)
-        {
-            foreach (RhinoObject obj in doc.Objects)
-            {
-                if (obj.Geometry.Equals(geometry))
-                {
-                    Layer layer = doc.Layers.FindIndex(obj.Attributes.LayerIndex);
-                    return layer.Name;
-                }
-            }
-
-            return null;
-        }
 
         #endregion
     }
