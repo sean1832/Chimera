@@ -37,5 +37,15 @@ namespace Monkey.src
                     return false;
             }
         }
+
+        public static bool CreatePathNotExist(string path)
+        {
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
+using Monkey.src.InputComponents;
 using Rhino.Geometry;
 
 namespace Monkey.src.Components
@@ -26,6 +28,30 @@ namespace Monkey.src.Components
             get
             {
                 return new string[] { "deconstruct path", "depath" };
+            }
+        }
+
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "Open Directory", OpenDirectory);
+        }
+
+        private void OpenDirectory(object sender, EventArgs e)
+        {
+            if (path == null)
+            {
+                MessageBox.Show("Warning: path is empty!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                string directory = Path.GetDirectoryName(path);
+                System.Diagnostics.Process.Start(directory);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -55,7 +81,6 @@ namespace Monkey.src.Components
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string path = null;
             if (!DA.GetData(0, ref path)) return;
 
             string extension = Path.GetExtension(path);
@@ -78,6 +103,7 @@ namespace Monkey.src.Components
             DA.SetData(2, extension);
         }
 
+        private string path;
         /// <summary>
         /// Provides an Icon for the component.
         /// </summary>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Grasshopper.Kernel;
@@ -7,6 +9,7 @@ using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
 using Monkey.src.InputComponents;
 using Monkey.src.IO;
+using Monkey.src.UI;
 using Rhino.Geometry;
 using Rhino.Runtime.RhinoAccounts;
 
@@ -31,7 +34,7 @@ namespace Monkey.src.Components
         {
             get
             {
-                return new string[] { "create path", "path", "constructpath", "createpath", "constructpath" };
+                return new string[] { "create path", "path", "constructpath", "createpath", "construct path" };
             }
         }
 
@@ -41,6 +44,8 @@ namespace Monkey.src.Components
             Menu_AppendItem(menu, "All", ToggleAll, true).Checked = category == "all";
             Menu_AppendItem(menu, "Object", ToggleObject, true).Checked = category == "object";
             Menu_AppendItem(menu, "Text", ToggleText, true).Checked = category == "text";
+            Menu_AppendSeparator(menu);
+            Menu_AppendItem(menu, "Open Directory", OpenDirectory);
         }
 
         public string category = "all";
@@ -70,6 +75,23 @@ namespace Monkey.src.Components
             ChangeValueList(category);
             
             ExpireSolution(true);
+        }
+
+        private void OpenDirectory(object sender, EventArgs e)
+        {
+            if (path == null)
+            {
+                MessageBox.Show("Warning: path is empty!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public void ChangeValueList(string cat)
@@ -174,9 +196,12 @@ namespace Monkey.src.Components
             DA.GetData(1, ref filename);
             DA.GetData(2, ref extension);
 
-            string path;
 
-            if (!Util.InputHasData(this, 0))
+            if (!Util.InputHasData(this, 0) && !Util.InputHasData(this, 1))
+            {
+                path = null;
+            }
+            else if (!Util.InputHasData(this, 0))
             {
                 path = filename + extension;
             }
@@ -188,14 +213,41 @@ namespace Monkey.src.Components
             {
                 path = directory + "\\" + filename + extension;
             }
+
             DA.SetData(0, path);
         }
 
         #region Additional
 
         private List<GH_ActiveObject> _activeObjects = new List<GH_ActiveObject>();
+        private string path;
+
+        private void CreatePathNotExist()
+        {
+            if (path == null) return;
+            try
+            {
+                bool created = Util.CreatePathNotExist(path);
+                if (!created) return;
+                MessageBox.Show("Path Created!", "Created!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error: {e}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         #endregion
+
+
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "CreatePath", CreatePathNotExist);
+            ExpireSolution(true);
+        }
 
         /// <summary>
         /// Provides an Icon for the component.
