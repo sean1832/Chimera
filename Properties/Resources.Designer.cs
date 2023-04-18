@@ -63,9 +63,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___Decipher {
+        internal static System.Drawing.Bitmap ConstructPath {
             get {
-                object obj = ResourceManager.GetObject("Monkey - Decipher", resourceCulture);
+                object obj = ResourceManager.GetObject("ConstructPath", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___DLA_Crawl {
+        internal static System.Drawing.Bitmap Counter {
             get {
-                object obj = ResourceManager.GetObject("Monkey___DLA_Crawl", resourceCulture);
+                object obj = ResourceManager.GetObject("Counter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___DLA_Visualizer {
+        internal static System.Drawing.Bitmap CurveContainment {
             get {
-                object obj = ResourceManager.GetObject("Monkey___DLA_Visualizer", resourceCulture);
+                object obj = ResourceManager.GetObject("CurveContainment", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___Hacker {
+        internal static System.Drawing.Bitmap Decipher {
             get {
-                object obj = ResourceManager.GetObject("Monkey - Hacker", resourceCulture);
+                object obj = ResourceManager.GetObject("Decipher", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey___Simulation_Parameters {
+        internal static System.Drawing.Bitmap DeconstructPath {
             get {
-                object obj = ResourceManager.GetObject("Monkey___Simulation_Parameters", resourceCulture);
+                object obj = ResourceManager.GetObject("DeconstructPath", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_ConstructPath {
+        internal static System.Drawing.Bitmap DLA_Crawl {
             get {
-                object obj = ResourceManager.GetObject("Monkey_ConstructPath", resourceCulture);
+                object obj = ResourceManager.GetObject("DLA_Crawl", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_Counter {
+        internal static System.Drawing.Bitmap DLA_Visualizer {
             get {
-                object obj = ResourceManager.GetObject("Monkey_Counter", resourceCulture);
+                object obj = ResourceManager.GetObject("DLA_Visualizer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_DeconstructPath {
+        internal static System.Drawing.Bitmap FileExport {
             get {
-                object obj = ResourceManager.GetObject("Monkey_DeconstructPath", resourceCulture);
+                object obj = ResourceManager.GetObject("FileExport", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_FileExport {
+        internal static System.Drawing.Bitmap FileMove {
             get {
-                object obj = ResourceManager.GetObject("Monkey_FileExport", resourceCulture);
+                object obj = ResourceManager.GetObject("FileMove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_FileMove {
+        internal static System.Drawing.Bitmap FileSearch {
             get {
-                object obj = ResourceManager.GetObject("Monkey_FileMove", resourceCulture);
+                object obj = ResourceManager.GetObject("FileSearch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_FileSearch {
+        internal static System.Drawing.Bitmap FileWrite {
             get {
-                object obj = ResourceManager.GetObject("Monkey_FileSearch", resourceCulture);
+                object obj = ResourceManager.GetObject("FileWrite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_FileWrite {
+        internal static System.Drawing.Bitmap GroundPlane {
             get {
-                object obj = ResourceManager.GetObject("Monkey_FileWrite", resourceCulture);
+                object obj = ResourceManager.GetObject("GroundPlane", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_Here {
+        internal static System.Drawing.Bitmap Hacker {
             get {
-                object obj = ResourceManager.GetObject("Monkey_Here", resourceCulture);
+                object obj = ResourceManager.GetObject("Hacker", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,59 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Monkey_PolyMesh {
+        internal static System.Drawing.Bitmap Here {
             get {
-                object obj = ResourceManager.GetObject("Monkey_PolyMesh", resourceCulture);
+                object obj = ResourceManager.GetObject("Here", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Layer_Name {
+            get {
+                object obj = ResourceManager.GetObject("Layer Name", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Origin {
+            get {
+                object obj = ResourceManager.GetObject("Origin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PolyMesh {
+            get {
+                object obj = ResourceManager.GetObject("PolyMesh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Simulation_Parameters {
+            get {
+                object obj = ResourceManager.GetObject("Simulation_Parameters", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SortByDirection {
+            get {
+                object obj = ResourceManager.GetObject("SortByDirection", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
