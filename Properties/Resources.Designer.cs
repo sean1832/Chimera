@@ -83,6 +83,16 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CullDuplicate {
+            get {
+                object obj = ResourceManager.GetObject("CullDuplicate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CullNull {
             get {
                 object obj = ResourceManager.GetObject("CullNull", resourceCulture);
@@ -223,9 +233,29 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ListSegment {
+            get {
+                object obj = ResourceManager.GetObject("ListSegment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Origin {
             get {
                 object obj = ResourceManager.GetObject("Origin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PadNumber {
+            get {
+                object obj = ResourceManager.GetObject("PadNumber", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

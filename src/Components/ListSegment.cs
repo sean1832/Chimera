@@ -20,7 +20,7 @@ namespace Monkey.src.Components
 
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "listsegement", "firstlast" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.ListSegment; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("2ee651b3-12ca-4842-9f30-b55b65ae24a3");
 
         #endregion

@@ -6,19 +6,19 @@ using System.Linq;
 
 namespace Monkey.src.Components
 {
-    public class RemoveDuplicates : GH_Component
+    public class CullDuplicates : GH_Component
     {
         #region Metadata
 
-        public RemoveDuplicates()
-          : base("RemoveDuplicates", "CullDup",
+        public CullDuplicates()
+          : base("CullDuplicates", "CullDup",
               "Removes duplicates from a list of data.",
               "Monkey", "Data")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "cullduplicates", "culldup", "removedup" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.CullDuplicate; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("4c23f203-dd49-4446-b307-37957ba875ec");
 
         #endregion

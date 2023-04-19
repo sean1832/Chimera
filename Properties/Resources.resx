@@ -124,6 +124,9 @@
   <data name="Counter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Counter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CullDuplicate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CullDuplicate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CullNull" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CullNull.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -166,8 +169,14 @@
   <data name="Layer Name" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Layer Name.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ListSegment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ListSegment.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Origin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Origin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PadNumber" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PadNumber.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PolyMesh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PolyMesh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
