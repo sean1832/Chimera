@@ -18,26 +18,22 @@ namespace Monkey.src.Components
 {
     public class FileCreatePath : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FilePath class.
-        /// </summary>
+        #region Metadata
         public FileCreatePath()
-          : base("Create Path", "Path",
-              "Create a file path",
-              "Monkey", "File")
+            : base("Create Path", "Path",
+                "Create a file path",
+                "Monkey", "File")
         {
         }
 
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override IEnumerable<string> Keywords => new string[] { "create path", "path", "constructpath", "createpath", "construct path" };
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.ConstructPath;
+        public override Guid ComponentGuid => new Guid("3C4B1375-FF6A-4551-A72D-C3D5BDDAD31A");
 
-        public override IEnumerable<string> Keywords
-        {
-            get
-            {
-                return new string[] { "create path", "path", "constructpath", "createpath", "construct path" };
-            }
-        }
+        #endregion
 
+        #region Context Menu
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
@@ -56,7 +52,7 @@ namespace Monkey.src.Components
             category = "all";
 
             ChangeValueList(category);
-            
+
             ExpireSolution(true);
         }
 
@@ -65,7 +61,7 @@ namespace Monkey.src.Components
             category = "object";
 
             ChangeValueList(category);
-            
+
             ExpireSolution(true);
         }
         private void ToggleText(object sender, EventArgs e)
@@ -73,7 +69,7 @@ namespace Monkey.src.Components
             category = "text";
 
             ChangeValueList(category);
-            
+
             ExpireSolution(true);
         }
 
@@ -112,7 +108,7 @@ namespace Monkey.src.Components
                     AddRuntimeMessage(GH_RuntimeMessageLevel.Error, $"Error: {e}");
                     return;
                 }
-                
+
                 foreach (var ghActiveObject in sourceObjects)
                 {
                     if (ghActiveObject is GH_ValueList)
@@ -160,9 +156,19 @@ namespace Monkey.src.Components
             _activeObjects.Add(obj);
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+
+        #endregion
+
+        #region Button
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "CreatePath", CreatePathNotExist);
+            ExpireSolution(true);
+        }
+
+        #endregion
+
+        #region IO
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Directory", "D", "Directory for the file to write.", GH_ParamAccess.item);
@@ -175,18 +181,13 @@ namespace Monkey.src.Components
 
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             string directory = null;
@@ -242,32 +243,5 @@ namespace Monkey.src.Components
         #endregion
 
 
-
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "CreatePath", CreatePathNotExist);
-            ExpireSolution(true);
-        }
-
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.ConstructPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("3C4B1375-FF6A-4551-A72D-C3D5BDDAD31A"); }
-        }
     }
 }
