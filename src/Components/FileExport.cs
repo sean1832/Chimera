@@ -49,7 +49,7 @@ namespace Monkey.src.Components
             if (filePathComponent is FileCreatePath filePath)
             {
                 filePath.ChangeValueList("object");
-                filePath.category = "object";
+                filePath.MenuCategory = "object";
                 filePath.ExpireSolution(true);
             }
         }

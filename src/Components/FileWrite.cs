@@ -42,7 +42,7 @@ namespace Monkey.src.Components
             if (filePathComponent is FileCreatePath filePath)
             {
                 filePath.ChangeValueList("text");
-                filePath.category = "text";
+                filePath.MenuCategory = "text";
                 filePath.ExpireSolution(true);
             }
 

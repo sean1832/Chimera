@@ -11,6 +11,7 @@ using Monkey.src.InputComponents;
 using Monkey.src.IO;
 using Monkey.src.UI;
 using Rhino.Geometry;
+using Rhino.Runtime;
 using Rhino.Runtime.RhinoAccounts;
 
 
@@ -33,43 +34,91 @@ namespace Monkey.src.Components
 
         #endregion
 
+        #region IO
+        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        {
+            pManager.AddTextParameter("Directory", "D", "Directory for the file to write.", GH_ParamAccess.item);
+            pManager.AddTextParameter("Filename", "N", "File name for the file to write.", GH_ParamAccess.item);
+            pManager.AddTextParameter("File Extension", "E", "Extension of the file to write", GH_ParamAccess.item);
+
+            this.Params.Input[0].Optional = true;
+            this.Params.Input[1].Optional = true;
+            this.Params.Input[2].Optional = true;
+
+        }
+
+        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        {
+            pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
+        }
+
+        #endregion
+
+        #region ClassVariables
+
+        public string MenuCategory { get; set; } = "all";
+
+        #endregion
+
+        #region (De)Serialization
+
+        public override bool Write(GH_IO.Serialization.GH_IWriter writer)
+        {
+            // First add our own field.
+            writer.SetString("Mode", MenuCategory);
+            // Then call the base class implementation.
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IO.Serialization.GH_IReader reader)
+        {
+            // First read our own field.
+            try
+            {
+                MenuCategory = reader.GetString("Mode");
+            }
+            catch (Exception e)
+            {
+                MenuCategory = MenuCategory;
+            }
+            
+            // Then call the base class implementation.
+            return base.Read(reader);
+        }
+
+        #endregion
+
         #region Context Menu
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "All", ToggleAll, true).Checked = category == "all";
-            Menu_AppendItem(menu, "Object", ToggleObject, true).Checked = category == "object";
-            Menu_AppendItem(menu, "Text", ToggleText, true).Checked = category == "text";
+            Menu_AppendItem(menu, "All", ToggleAll, true).Checked = MenuCategory == "all";
+            Menu_AppendItem(menu, "Object", ToggleObject, true).Checked = MenuCategory == "object";
+            Menu_AppendItem(menu, "Text", ToggleText, true).Checked = MenuCategory == "text";
             Menu_AppendSeparator(menu);
             Menu_AppendItem(menu, "Open Directory", OpenDirectory);
         }
 
-        public string category = "all";
-
 
         private void ToggleAll(object sender, EventArgs e)
         {
-            category = "all";
-
-            ChangeValueList(category);
-
+            RecordUndoEvent("ToggleAll");
+            MenuCategory = "all";
+            ChangeValueList(MenuCategory);
             ExpireSolution(true);
         }
 
         private void ToggleObject(object sender, EventArgs e)
         {
-            category = "object";
-
-            ChangeValueList(category);
-
+            RecordUndoEvent("ToggleObject");
+            MenuCategory = "object";
+            ChangeValueList(MenuCategory);
             ExpireSolution(true);
         }
         private void ToggleText(object sender, EventArgs e)
         {
-            category = "text";
-
-            ChangeValueList(category);
-
+            RecordUndoEvent("ToggleText");
+            MenuCategory = "text";
+            ChangeValueList(MenuCategory);
             ExpireSolution(true);
         }
 
@@ -150,7 +199,7 @@ namespace Monkey.src.Components
             int targetCount = 3;
             int targetIndex = targetCount - 1;
 
-            (string[] fullnames, string[] extensions) = GetListValues(category);
+            (string[] fullnames, string[] extensions) = GetListValues(MenuCategory);
 
             GH_ActiveObject obj = input.CreateValueListAt(targetIndex, fullnames, extensions, false);
             _activeObjects.Add(obj);
@@ -160,6 +209,7 @@ namespace Monkey.src.Components
         #endregion
 
         #region Button
+
         public override void CreateAttributes()
         {
             m_attributes = new ComponentButton(this, "CreatePath", CreatePathNotExist);
@@ -168,25 +218,7 @@ namespace Monkey.src.Components
 
         #endregion
 
-        #region IO
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
-        {
-            pManager.AddTextParameter("Directory", "D", "Directory for the file to write.", GH_ParamAccess.item);
-            pManager.AddTextParameter("Filename", "N", "File name for the file to write.", GH_ParamAccess.item);
-            pManager.AddTextParameter("File Extension", "E", "Extension of the file to write", GH_ParamAccess.item);
-
-            this.Params.Input[0].Optional = true;
-            this.Params.Input[1].Optional = true;
-            this.Params.Input[2].Optional = true;
-
-        }
-
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
-        {
-            pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
-        }
-
-        #endregion
+        
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
@@ -197,6 +229,7 @@ namespace Monkey.src.Components
             DA.GetData(1, ref filename);
             DA.GetData(2, ref extension);
 
+            Message = MenuCategory;
 
             if (!Util.InputHasData(this, 0) && !Util.InputHasData(this, 1))
             {
