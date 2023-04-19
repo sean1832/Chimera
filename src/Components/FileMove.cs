@@ -9,9 +9,6 @@ namespace Monkey.src.Components
 {
     public class FileMove : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FileMove class.
-        /// </summary>
         public FileMove()
           : base("File Move", "File Move",
               "Move a list of files to a directory.",
@@ -20,10 +17,10 @@ namespace Monkey.src.Components
         }
 
         public override GH_Exposure Exposure => GH_Exposure.secondary;
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.FileMove;
+        public override Guid ComponentGuid => new Guid("9EF2EF38-3D41-4952-A8DF-316CED99AAE4");
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Source", "S", "Location of the file you want to move.", GH_ParamAccess.list);
@@ -33,18 +30,13 @@ namespace Monkey.src.Components
             pManager.AddBooleanParameter("Run", "R", "Executing operation.", GH_ParamAccess.item, false);
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
+        
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Info", "I", "Output information", GH_ParamAccess.list);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<string> source = new List<string>();
@@ -98,36 +90,19 @@ namespace Monkey.src.Components
         #endregion
 
 
+        
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Run", Run);
+        }
         private void Run()
         {
             run = true;
             this.ExpireSolution(true);
         }
 
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "Run", Run);
-        }
-
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.FileMove;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("9EF2EF38-3D41-4952-A8DF-316CED99AAE4"); }
-        }
+        
+        
     }
 }
