@@ -222,14 +222,14 @@ namespace Monkey.src.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            Message = MenuCategory;
+
             string directory = null;
             string filename = null;
             string extension = null;
             DA.GetData(0, ref directory);
             DA.GetData(1, ref filename);
             DA.GetData(2, ref extension);
-
-            Message = MenuCategory;
 
             if (!Util.InputHasData(this, 0) && !Util.InputHasData(this, 1))
             {

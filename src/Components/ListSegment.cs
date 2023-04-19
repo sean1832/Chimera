@@ -45,20 +45,9 @@ namespace Monkey.src.Components
 
         #endregion
 
+        #region ClassVariables
 
-
-        #region ClassLevelVariables
-
-        private string _mode = "First/Last";
-        public string Mode
-        {
-            get => _mode;
-            set
-            {
-                _mode = value;
-                Message = _mode;
-            }
-        }
+        public string Mode { get; set; } = "First/Last";
 
         #endregion
 
@@ -74,7 +63,15 @@ namespace Monkey.src.Components
         public override bool Read(GH_IO.Serialization.GH_IReader reader)
         {
             // First read our own field.
-            Mode = reader.GetString("Mode") ?? _mode;
+            try
+            {
+                Mode = reader.GetString("Mode");
+            }
+            catch (Exception e)
+            {
+                Mode = Mode;
+            }
+            
             // Then call the base class implementation.
             return base.Read(reader);
         }
@@ -109,6 +106,7 @@ namespace Monkey.src.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            Message = Mode;
             List<object> inputList = new List<object>();
             int n = 1;
 
