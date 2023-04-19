@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Grasshopper.Kernel;
+using Monkey.Properties;
 using Monkey.src.InputComponents;
 using Monkey.src.UI;
 using Rhino.Geometry;
@@ -15,29 +17,59 @@ namespace Monkey.src.Components
 {
     public class FileExport : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FileExport class.
-        /// </summary>
+        #region Metadata
+
         public FileExport()
-          : base("File Export", "Export",
-              "Export a grasshopper object to a designated path.",
-              "Monkey", "File")
+            : base("File Export", "Export",
+                "Export a grasshopper object to a designated path.",
+                "Monkey", "File")
         {
         }
 
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override IEnumerable<string> Keywords => new string[] { "export", "export object", "file export" };
+        protected override Bitmap Icon => Resources.FileExport;
+        public override Guid ComponentGuid => new Guid("CF2B164F-C51A-4698-A0C6-D19C6731E2BF");
 
-        /// <summary>
-        /// Overrides the Description property to include the desired keywords.
-        /// </summary>
-        public override IEnumerable<string> Keywords
+        #endregion
+
+        #region IO
+
+        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            get
-            {
-                return new string[] { "export", "export object", "file export" };
-            }
+            pManager.AddMeshParameter("Mesh", "M", "Mesh to export. Any breps or subd will be converted to mesh.",
+                GH_ParamAccess.list);
+            pManager.AddTextParameter("[]Path", "[]P", "Path to export.", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Run", "RUN", "Execute the operation.", GH_ParamAccess.item, false);
+
+            Params.Input[0].Optional = true;
+            Params.Input[1].Optional = true;
         }
 
+        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        {
+            pManager.AddTextParameter("Info", "I", "Output information", GH_ParamAccess.list);
+        }
+
+        #endregion
+
+        #region Button
+
+        private bool runBut;
+        private void Run()
+        {
+            runBut = true;
+            ExpireSolution(true);
+        }
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Export", Run);
+        }
+
+        #endregion
+
+        #region AddComponent
 
         public override void AddedToDocument(GH_Document document)
         {
@@ -45,7 +77,7 @@ namespace Monkey.src.Components
             if (this.Params.Input[1].SourceCount != 0) return;
 
             var input = new ComponentInput(document, this);
-            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0);
+            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0, false, 40, 40);
             if (filePathComponent is FileCreatePath filePath)
             {
                 filePath.ChangeValueList("object");
@@ -54,42 +86,77 @@ namespace Monkey.src.Components
             }
         }
 
+        #endregion
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        #region Class Variable
+
+        public bool IsGroupExport { get; set; } = false;
+
+        #endregion
+
+        #region (De)Serialization
+
+        public override bool Write(GH_IO.Serialization.GH_IWriter writer)
         {
-            pManager.AddMeshParameter("Mesh", "M", "Mesh to export. Any breps or subd will be converted to mesh.",
-                GH_ParamAccess.list);
-            pManager.AddTextParameter("[]Path", "[]P", "Path to export.", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Bind", "B", "Export meshes as one file", GH_ParamAccess.item, true);
-            pManager.AddBooleanParameter("Run", "RUN", "Execute the operation.", GH_ParamAccess.item, false);
-
+            // First add our own field.
+            writer.SetBoolean("BindMode", IsGroupExport);
+            // Then call the base class implementation.
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IO.Serialization.GH_IReader reader)
+        {
+            // First read our own field.
+            try
+            {
+                IsGroupExport = reader.GetBoolean("BindMode");
+            }
+            catch (Exception e)
+            {
+                // default value
+                IsGroupExport = false;
+            }
+            
+            // Then call the base class implementation.
+            return base.Read(reader);
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        #endregion
+
+        #region Context Menu
+
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
-            pManager.AddTextParameter("Info", "I", "Output information", GH_ParamAccess.list);
+            base.AppendAdditionalComponentMenuItems(menu);
+            ToolStripMenuItem item = Menu_AppendItem(menu, "Group Mode", ToggleBind, true, IsGroupExport);
+            item.ToolTipText = "When checked, merge and export all objects as one file.";
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        private void ToggleBind(object sender, EventArgs e)
+        {
+            RecordUndoEvent("ToggleBind");
+            IsGroupExport = !IsGroupExport;
+            ExpireSolution(true);
+        }
+
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            if (IsGroupExport)
+            {
+                Message = "Group";
+            }
+            else
+            {
+                Message = "Unit";
+            }
+
             List<Mesh> meshes = new List<Mesh>();
             string path = null;
-            bool bind = false;
             bool run = false;
             if (!DA.GetDataList(0, meshes)) return;
             if (!DA.GetData(1, ref path)) return;
-            if (!DA.GetData(2, ref bind)) return;
-            if (!DA.GetData(3, ref run)) return;
+            DA.GetData(2, ref run);
 
             List<string> info = new List<string>();
 
@@ -108,7 +175,7 @@ namespace Monkey.src.Components
                 Rhino.RhinoDoc.ActiveDoc.Objects.UnselectAll(); // unselect all
                 string filepath;
                 var attribute = new Rhino.DocObjects.ObjectAttributes();
-                if (!bind)
+                if (!IsGroupExport)
                 {
                     try
                     {
@@ -166,57 +233,18 @@ namespace Monkey.src.Components
                 Rhino.RhinoDoc.ActiveDoc.Objects.UnselectAll(); // unselect all
                 runBut = false;
                 DA.SetDataList(0, info);
-                if (showDir)
-                {
-                    // show dialog ask for open export directory
-                    var dialogResult = MessageBox.Show("Exported!\nDo you want to open directory?", "Export Status", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button2);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        System.Diagnostics.Process.Start(directory);
-                    }
-                    else
-                    {
-                        showDir = false;
-                    }
-                }
             }
         }
 
-        private bool runBut;
-        private bool showDir = true;
+        #region Additional
 
 
-        private void Run()
-        {
-            runBut = true;
-            ExpireSolution(true);
-        }
+        #endregion
 
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "Export", Run);
-        }
 
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.FileExport;
-            }
-        }
 
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("CF2B164F-C51A-4698-A0C6-D19C6731E2BF"); }
-        }
+
+
+
     }
 }
