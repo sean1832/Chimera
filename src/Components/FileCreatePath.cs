@@ -134,8 +134,8 @@ namespace Monkey.src.Components
                 System.Diagnostics.Process.Start(path);
             }
             catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            { 
+                MessageBox.Show($"Unable to open directory!\nIs path {path} exist?\n\n\n{ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -201,7 +201,7 @@ namespace Monkey.src.Components
 
             (string[] fullnames, string[] extensions) = GetListValues(MenuCategory);
 
-            GH_ActiveObject obj = input.CreateValueListAt(targetIndex, fullnames, extensions, false);
+            GH_ActiveObject obj = input.CreateValueListAt(targetIndex, fullnames, extensions, false, -30, -7);
             _activeObjects.Add(obj);
         }
 
@@ -213,12 +213,34 @@ namespace Monkey.src.Components
         public override void CreateAttributes()
         {
             m_attributes = new ComponentButton(this, "CreatePath", CreatePathNotExist);
-            ExpireSolution(true);
+        }
+
+        private void CreatePathNotExist()
+        {
+            if (path == null) return;
+            try
+            {
+                path = Path.GetDirectoryName(path);
+
+                bool created = Util.CreatePathNotExist(path);
+                if (!created) return;
+                MessageBox.Show("Path Created!", "Created!", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Error: {e}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                ExpireSolution(true);
+            }
         }
 
         #endregion
 
-        
+
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
@@ -256,21 +278,7 @@ namespace Monkey.src.Components
         private List<GH_ActiveObject> _activeObjects = new List<GH_ActiveObject>();
         private string path;
 
-        private void CreatePathNotExist()
-        {
-            if (path == null) return;
-            try
-            {
-                bool created = Util.CreatePathNotExist(path);
-                if (!created) return;
-                MessageBox.Show("Path Created!", "Created!", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show($"Error: {e}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
 
 
         #endregion
