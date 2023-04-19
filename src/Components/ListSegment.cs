@@ -202,14 +202,14 @@ namespace Monkey.src.Components
                 if (listLength % 2 == 0)
                 {
                     // even
-                    middleItems = inputList.GetRange(middleIndex - 1, n+1);
+                    middleItems = inputList.GetRange(middleIndex - n, n*2);
                     frontSection = inputList.GetRange(0, middleIndex - n);
                     backSection = inputList.GetRange(middleIndex + n, listLength - middleIndex - n);
                 }
                 else
                 {
                     // odd
-                    middleItems = inputList.GetRange(middleIndex - n, n + 2);
+                    middleItems = inputList.GetRange(middleIndex - n, n*2+1);
                     frontSection = inputList.GetRange(0, middleIndex - n);
                     backSection = inputList.GetRange(middleIndex + n + 1, listLength - middleIndex - n - 1);
                 }
