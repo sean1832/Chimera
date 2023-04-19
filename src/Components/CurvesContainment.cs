@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Monkey.src.Components
 {
@@ -41,6 +42,33 @@ namespace Monkey.src.Components
 
         #endregion
 
+        #region Context Menu
+
+        private int sampleCount = 2;
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "SamplePoint 2", Toggle2, true).Checked = sampleCount == 2;
+            Menu_AppendItem(menu, "SamplePoint 4", Toggle4, true).Checked = sampleCount == 4;
+            Menu_AppendItem(menu, "SamplePoint 6", Toggle6, true).Checked = sampleCount == 6;
+        }
+
+        private void Toggle2(object sender, EventArgs e)
+        {
+            sampleCount = 2;
+            ExpireSolution(true);
+        }
+        private void Toggle4(object sender, EventArgs e)
+        {
+            sampleCount = 4;
+            ExpireSolution(true);
+        }
+        private void Toggle6(object sender, EventArgs e)
+        {
+            sampleCount = 6;
+            ExpireSolution(true);
+        }
+        #endregion
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
@@ -62,9 +90,11 @@ namespace Monkey.src.Components
             // Partition input curves into exterior and interior curves
             PartitionCurves(inputCurves, ref exteriorCrvs, ref interiorCrvs);
 
+            (List<Curve> cleanInteriorCrvs, List<Curve> cleanExteriorCrvs) = RemoveDuplicates(interiorCrvs, exteriorCrvs);
+
             // Set output data for the Grasshopper component
-            DA.SetDataList(0, interiorCrvs);
-            DA.SetDataList(1, exteriorCrvs);
+            DA.SetDataList(0, cleanInteriorCrvs);
+            DA.SetDataList(1, cleanExteriorCrvs);
         }
 
         #region Additional
@@ -95,49 +125,116 @@ namespace Monkey.src.Components
 
         private void PartitionCurves(List<Curve> inputCurves, ref List<Curve> exteriorCrvs, ref List<Curve> interiorCrvs)
         {
-            // Initialize a list of unprocessed curves, starting with all input curves
-            List<Curve> unprocessedCrvs = new List<Curve>(inputCurves);
-
-            // Find the most exterior curve
-            Curve mostExteriorCurve = FindMostExteriorCurve(inputCurves);
-
-            // Add the most exterior curve to the exterior curves list
-            exteriorCrvs.Add(mostExteriorCurve);
-            unprocessedCrvs.Remove(mostExteriorCurve);
-
-            // Iterate through unprocessed curves to determine their containment relationships
-            foreach (Curve curve in unprocessedCrvs)
+            List<Curve> parallelCrvs = new List<Curve>(inputCurves);
+            // test containment
+            for (int i = 0; i < inputCurves.Count; i++)
             {
-                // Determine if the curve is inside the most exterior curve
-                Point3d curveCenter = curve.GetBoundingBox(false).Center;
-                if (mostExteriorCurve.Contains(curveCenter, Plane.WorldXY, 0.001) == PointContainment.Inside)
+                Curve crvA = inputCurves[i];
+                for (int j = i + 1; j < inputCurves.Count; j++)
                 {
-                    interiorCrvs.Add(curve);
-                }
-                else
-                {
-                    exteriorCrvs.Add(curve);
+                    Curve crvB = inputCurves[j];
+                    RegionContainment containment = Curve.PlanarClosedCurveRelationship(crvA, crvB, Plane.WorldXY, 0.001);
+                    switch (containment)
+                    {
+                        case RegionContainment.AInsideB:
+                            interiorCrvs.Add(crvA);
+                            exteriorCrvs.Add(crvB);
+
+                            // remove crvA from parallelCrvs
+                            parallelCrvs.Remove(crvA);
+                            // remove crvB from parallelCrvs
+                            parallelCrvs.Remove(crvB);
+
+                            break;
+                        case RegionContainment.BInsideA:
+                            interiorCrvs.Add(crvB);
+                            exteriorCrvs.Add(crvA);
+
+                            // remove crvA from parallelCrvs
+                            parallelCrvs.Remove(crvA);
+                            // remove crvB from parallelCrvs
+                            parallelCrvs.Remove(crvB);
+                            break;
+                        case RegionContainment.Disjoint:
+                            break;
+                        case RegionContainment.MutualIntersection:
+                            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "Input curves contain mutual intersections.");
+                            break;
+                    }
                 }
             }
+            exteriorCrvs.AddRange(parallelCrvs);
+            
         }
 
-        private Curve FindMostExteriorCurve(List<Curve> curves)
+        private (List<Curve>, List<Curve>) RemoveDuplicates(List<Curve> curvesA, List<Curve> curvesB)
         {
-            Curve largestCurve = null;
-            double largestArea = double.MinValue;
+            List<Curve> uniqueCurves = new List<Curve>();
+            List<Curve> cleanedCurvesA = new List<Curve>();
+            List<Curve> cleanedCurvesB = new List<Curve>();
+            double tolerance = 0.001;
 
-            foreach (Curve curve in curves)
+            // Add unique curves from the first list
+            foreach (Curve curve in curvesA)
             {
-                double area = AreaMassProperties.Compute(curve).Area;
-                if (area > largestArea)
+                if (!IsDuplicate(curve, uniqueCurves, tolerance))
                 {
-                    largestArea = area;
-                    largestCurve = curve;
+                    uniqueCurves.Add(curve);
+                    cleanedCurvesA.Add(curve);
                 }
             }
 
-            return largestCurve;
+            // Add unique curves from the second list
+            foreach (Curve curve in curvesB)
+            {
+                if (!IsDuplicate(curve, uniqueCurves, tolerance))
+                {
+                    uniqueCurves.Add(curve);
+                    cleanedCurvesB.Add(curve);
+                }
+            }
+
+            return (cleanedCurvesA, cleanedCurvesB);
         }
+
+        private bool IsDuplicate(Curve curve, List<Curve> uniqueCurves, double tolerance)
+        {
+            foreach (Curve uniqueCurve in uniqueCurves)
+            {
+                if (AreCurvesAlmostEqual(curve, uniqueCurve, tolerance))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        private bool AreCurvesAlmostEqual(Curve curve1, Curve curve2, double tolerance)
+        {
+            if (curve1 == null || curve2 == null) return false;
+
+            if (curve1.IsPeriodic || curve2.IsPeriodic)
+            {
+                curve1 = curve1.ToNurbsCurve();
+                curve2 = curve2.ToNurbsCurve();
+            }
+
+            for (int i = 0; i < sampleCount; i++)
+            {
+                double t = (double)i / (sampleCount - 1);
+                Point3d pt1 = curve1.PointAtNormalizedLength(t);
+                Point3d pt2 = curve2.PointAtNormalizedLength(t);
+
+                if (pt1.DistanceTo(pt2) > tolerance)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }
