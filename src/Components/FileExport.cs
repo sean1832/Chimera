@@ -111,7 +111,7 @@ namespace Monkey.src.Components
             var spawn = Menu_AppendItem(menu, "Create Path", ToggleSpawn, Properties.Resources.Add_New);
             spawn.ToolTipText = "Create a new path input.";
 
-            ToolStripMenuItem bind = Menu_AppendItem(menu, "Group Mode", ToggleBind, true, IsGroupExport);
+            ToolStripMenuItem bind = Menu_AppendItem(menu, "Group Mode", ToggleBind, Properties.Resources.Product_Box_03_WF,true, IsGroupExport);
             bind.ToolTipText = "When checked, merge and export all objects as one file.";
         }
 

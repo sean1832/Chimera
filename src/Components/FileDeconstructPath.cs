@@ -11,30 +11,46 @@ namespace Monkey.src.Components
 {
     public class FileDeconstructPath : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FileDeconstructPath class.
-        /// </summary>
+        #region Metadata
+
         public FileDeconstructPath()
-          : base("Deconstruct Path", "DePath",
-              "Deconstruct a path to its elements",
-              "Monkey", "File")
+            : base("Deconstruct Path", "DePath",
+                "Deconstruct a path to its elements",
+                "Monkey", "File")
         {
         }
 
         public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override IEnumerable<string> Keywords => new string[] { "deconstruct path", "depath" };
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.DeconstructPath;
+        public override Guid ComponentGuid => new Guid("67FC6FCE-8664-45A0-AEFD-D04096485E18");
 
-        public override IEnumerable<string> Keywords
+        #endregion
+
+        #region IO
+
+        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            get
-            {
-                return new string[] { "deconstruct path", "depath" };
-            }
+            pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
+
+            this.Params.Input[0].Optional = true;
         }
+
+        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        {
+            pManager.AddTextParameter("Directory", "D", "Directory for the file.", GH_ParamAccess.item);
+            pManager.AddTextParameter("Filename", "N", "File name for the file.", GH_ParamAccess.item);
+            pManager.AddTextParameter("File Extension", "E", "Extension of the file", GH_ParamAccess.item);
+        }
+
+        #endregion
+
+        #region Context Menu
 
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "Open Directory", OpenDirectory);
+            Menu_AppendItem(menu, "Open Directory", OpenDirectory, Properties.Resources.Window_New_Open);
         }
 
         private void OpenDirectory(object sender, EventArgs e)
@@ -55,30 +71,8 @@ namespace Monkey.src.Components
             }
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
-        {
-            pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
+        #endregion
 
-            this.Params.Input[0].Optional = true;
-        }
-
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
-        {
-            pManager.AddTextParameter("Directory", "D", "Directory for the file.", GH_ParamAccess.item);
-            pManager.AddTextParameter("Filename", "N", "File name for the file.", GH_ParamAccess.item);
-            pManager.AddTextParameter("File Extension", "E", "Extension of the file", GH_ParamAccess.item);
-        }
-
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             if (!DA.GetData(0, ref path)) return;
@@ -103,26 +97,13 @@ namespace Monkey.src.Components
             DA.SetData(2, extension);
         }
 
-        private string path;
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.DeconstructPath;
-            }
-        }
+        #region Additional
 
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("67FC6FCE-8664-45A0-AEFD-D04096485E18"); }
-        }
+        private string path;
+
+        #endregion
+
+
+
     }
 }

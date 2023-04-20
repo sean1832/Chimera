@@ -283,6 +283,16 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Product_Box_03_WF {
+            get {
+                object obj = ResourceManager.GetObject("Product Box-03-WF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Simulation_Parameters {
             get {
                 object obj = ResourceManager.GetObject("Simulation_Parameters", resourceCulture);
