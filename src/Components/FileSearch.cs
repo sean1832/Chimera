@@ -8,32 +8,24 @@ namespace Monkey.src.Components
 {
     public class FileSearch : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FileSearch class.
-        /// </summary>
+        #region Metadata
+
         public FileSearch()
-          : base("File Search", "Search",
-              "Search for files in a specified directory based on a given file name pattern.",
-              "Monkey", "File")
+            : base("File Search", "Search",
+                "Search for files in a specified directory based on a given file name pattern.",
+                "Monkey", "File")
         {
         }
 
         public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override IEnumerable<string> Keywords => new string[] { "search", "search file" };
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.FileSearch;
+        public override Guid ComponentGuid => new Guid("2E7A9B25-4A2D-4E6F-A6B0-F3AF853735CA");
 
-        /// <summary>
-        /// Overrides the Description property to include the desired keywords.
-        /// </summary>
-        public override IEnumerable<string> Keywords
-        {
-            get
-            {
-                return new string[] { "search", "search file" };
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+        #region IO
+
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Directory", "Dir", "The target directory where the search will be performed.",
@@ -46,18 +38,13 @@ namespace Monkey.src.Components
             pManager[0].Optional = true;
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Source", "S", "Found files path.", GH_ParamAccess.list);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             // Declare and initialize input variables
@@ -78,29 +65,6 @@ namespace Monkey.src.Components
 
             // Set the output data
             DA.SetDataList(0, fileList);
-        }
-
-
-
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.FileSearch;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("2E7A9B25-4A2D-4E6F-A6B0-F3AF853735CA"); }
         }
     }
 }
