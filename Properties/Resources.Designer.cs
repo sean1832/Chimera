@@ -63,6 +63,16 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Add_New {
+            get {
+                object obj = ResourceManager.GetObject("Add-New", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConstructPath {
             get {
                 object obj = ResourceManager.GetObject("ConstructPath", resourceCulture);
@@ -286,6 +296,16 @@ namespace Monkey.Properties {
         internal static System.Drawing.Bitmap SortByDirection {
             get {
                 object obj = ResourceManager.GetObject("SortByDirection", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Window_New_Open {
+            get {
+                object obj = ResourceManager.GetObject("Window-New-Open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

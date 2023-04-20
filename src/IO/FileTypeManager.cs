@@ -46,7 +46,7 @@ namespace Monkey.src.IO
 
         public List<FileTypeInfo> GetFileTypesByCategory(string category)
         {
-            if (category == "all")
+            if (category == "any")
             {
                 List<FileTypeInfo> allFileTypes = new List<FileTypeInfo>();
                 foreach (var fileTypeList in fileCategories.Values)

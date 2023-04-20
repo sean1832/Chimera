@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -39,7 +40,7 @@ namespace Monkey.src.Components
         {
             pManager.AddTextParameter("Directory", "D", "Directory for the file to write.", GH_ParamAccess.item);
             pManager.AddTextParameter("Filename", "N", "File name for the file to write.", GH_ParamAccess.item);
-            pManager.AddTextParameter("File Extension", "E", "Extension of the file to write", GH_ParamAccess.item);
+            pManager.AddTextParameter("Extension", "E", "Extension of the file to write", GH_ParamAccess.item);
 
             this.Params.Input[0].Optional = true;
             this.Params.Input[1].Optional = true;
@@ -56,7 +57,16 @@ namespace Monkey.src.Components
 
         #region ClassVariables
 
-        public string MenuCategory { get; set; } = "all";
+        private string _menuCategory = "any";
+        public string MenuCategory
+        {
+            get => _menuCategory;
+            set
+            {
+                _menuCategory = value;
+                Message = _menuCategory;
+            }
+        }
 
         #endregion
 
@@ -91,18 +101,33 @@ namespace Monkey.src.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "All", ToggleAll, true).Checked = MenuCategory == "all";
-            Menu_AppendItem(menu, "Object", ToggleObject, true).Checked = MenuCategory == "object";
-            Menu_AppendItem(menu, "Text", ToggleText, true).Checked = MenuCategory == "text";
+            Menu_AppendItem(menu, "Create Extensions", ToggleSpawn, Properties.Resources.Add_New);
+            Menu_AppendItem(menu, "Open Directory", OpenDirectory, Properties.Resources.Window_New_Open);
             Menu_AppendSeparator(menu);
-            Menu_AppendItem(menu, "Open Directory", OpenDirectory);
+
+            // Create the 'Presets' sub-menu
+            ToolStripMenuItem presetsSubMenu = new ToolStripMenuItem("Presets");
+
+            Menu_AppendItem(presetsSubMenu.DropDown, "ANY", ToggleAll, true).Checked = MenuCategory == "any";
+            Menu_AppendItem(presetsSubMenu.DropDown, "OBJECT", ToggleObject, true).Checked = MenuCategory == "object";
+            Menu_AppendItem(presetsSubMenu.DropDown, "TEXT", ToggleText, true).Checked = MenuCategory == "text";
+
+            // Add the 'Presets' sub-menu to the main context menu
+            menu.Items.Add(presetsSubMenu);
         }
 
+
+        private void ToggleSpawn(object sender, EventArgs e)
+        {
+            RecordUndoEvent("ToggleSpawn");
+            SpawnValueList();
+            ExpireSolution(true);
+        }
 
         private void ToggleAll(object sender, EventArgs e)
         {
             RecordUndoEvent("ToggleAll");
-            MenuCategory = "all";
+            MenuCategory = "any";
             ChangeValueList(MenuCategory);
             ExpireSolution(true);
         }
@@ -142,13 +167,12 @@ namespace Monkey.src.Components
 
         public void ChangeValueList(string cat)
         {
-            ComponentInput input = new ComponentInput(OnPingDocument(), this);
-            (string[] fullnames, string[] extension) = GetListValues(cat);
-
             // this is the prefer method to find the connected components.
             if (Params.Input[2].SourceCount > 0)
             {
-                List<GH_ActiveObject> sourceObjects = new List<GH_ActiveObject>();
+                ComponentInput input = new ComponentInput(OnPingDocument(), this);
+                (string[] fullnames, string[] extension) = RetreiveListValues(cat);
+                List<GH_ActiveObject> sourceObjects;
                 try
                 {
                     sourceObjects = input.GetSourceObjects(2, typeof(GH_ValueList));
@@ -161,15 +185,14 @@ namespace Monkey.src.Components
 
                 foreach (var ghActiveObject in sourceObjects)
                 {
-                    if (ghActiveObject is GH_ValueList)
-                    {
-                        input.ChangeValueList((GH_ValueList)ghActiveObject, fullnames, extension);
-                    }
+                    if (!(ghActiveObject is GH_ValueList list)) continue;
+
+                    input.ChangeValueList(list, fullnames, extension);
                 }
             }
         }
 
-        private (string[], string[]) GetListValues(string cat)
+        private (string[], string[]) RetreiveListValues(string cat)
         {
             FileTypeManager manager = new FileTypeManager();
             List<FileTypeInfo> fileTypes = manager.GetFileTypesByCategory(cat);
@@ -191,21 +214,6 @@ namespace Monkey.src.Components
             }
             return (fullname.ToArray(), extension.ToArray());
         }
-
-        public override void AddedToDocument(GH_Document document)
-        {
-            base.AddedToDocument(document);
-            if (this.Params.Input[2].SourceCount != 0) return;
-            ComponentInput input = new ComponentInput(OnPingDocument(), this);
-            int targetCount = 3;
-            int targetIndex = targetCount - 1;
-
-            (string[] fullnames, string[] extensions) = GetListValues(MenuCategory);
-
-            GH_ActiveObject obj = input.CreateValueListAt(targetIndex, fullnames, extensions, false, -30, -7);
-            _activeObjects.Add(obj);
-        }
-
 
         #endregion
 
@@ -242,17 +250,16 @@ namespace Monkey.src.Components
         #endregion
 
 
-
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            Message = MenuCategory;
-
             string directory = null;
             string filename = null;
             string extension = null;
             DA.GetData(0, ref directory);
             DA.GetData(1, ref filename);
             DA.GetData(2, ref extension);
+
+            
 
             if (!Util.InputHasData(this, 0) && !Util.InputHasData(this, 1))
             {
@@ -278,8 +285,20 @@ namespace Monkey.src.Components
 
         private List<GH_ActiveObject> _activeObjects = new List<GH_ActiveObject>();
         private string path;
+        private bool spawned;
 
-        
+        private void SpawnValueList()
+        {
+            if (this.Params.Input[2].SourceCount != 0) return;
+            ComponentInput input = new ComponentInput(OnPingDocument(), this);
+            int targetCount = 3;
+            int targetIndex = targetCount - 1;
+
+            (string[] fullnames, string[] extensions) = RetreiveListValues(MenuCategory);
+
+            GH_ActiveObject obj = input.CreateValueListAt(targetIndex, fullnames, extensions, false, -150, -65);
+            _activeObjects.Add(obj);
+        }
 
 
         #endregion

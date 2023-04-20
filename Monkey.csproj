@@ -47,6 +47,10 @@
     </None>
   </ItemGroup>
   
+  <ItemGroup>
+    <Folder Include="Resources\Context Menu\" />
+  </ItemGroup>
+  
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
     <StartProgram>D:\02-design\01-3D\01-Rhino\Rhino 7\System\Rhino.exe</StartProgram>
     <StartArguments>

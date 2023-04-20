@@ -44,7 +44,7 @@ namespace Monkey.src.InputComponents
             slider.Slider.Minimum = (decimal)min;
             slider.Slider.Maximum = (decimal)max;
 
-            var pt = CreateOnCanvasAt(slider, index, local, offsetX, offsetY);
+            var pt = CreateOnCanvasAt(slider, index, offsetX, offsetY);
             slider.Attributes.Pivot = pt;
             slider.SetSliderValue((decimal)defaultVal);
             slider.Slider.DecimalPlaces = decimalPlace;
@@ -77,9 +77,9 @@ namespace Monkey.src.InputComponents
             }
             valueList.SelectItem(0);
 
-            var pt = CreateOnCanvasAt(valueList, index, local, offsetX, offsetY);
+            var pt = CreateOnCanvasAt(valueList, index, offsetX, offsetY);
             valueList.Attributes.Pivot = pt;
-
+            var checkPt = valueList.Attributes.Pivot;
             
             Document.AddObject(valueList, false);
             Component.Params.Input[index].AddSource(valueList);
@@ -98,10 +98,10 @@ namespace Monkey.src.InputComponents
             return valueList;
         }
 
-        public GH_ActiveObject CreateCustomComponentAt<T>(int inputIndex, int outputIndex, bool local = false, double offsetX = 0, double offsetY = 0) where T : GH_Component, new()
+        public GH_ActiveObject CreateCustomComponentAt<T>(int inputIndex, int outputIndex, double offsetX = 0, double offsetY = 0) where T : GH_Component, new()
         {
             var customComponent = new T();
-            var pt = CreateOnCanvasAt(customComponent, inputIndex, local, offsetX, offsetY);
+            var pt = CreateOnCanvasAt(customComponent, inputIndex, offsetX, offsetY);
             customComponent.CreateAttributes();
 
             customComponent.Attributes.Pivot = pt;
@@ -173,26 +173,20 @@ namespace Monkey.src.InputComponents
         /// <param name="index">The parameter index of the parent component to connect to.</param>
         /// <param name="local">Is the spawn method local? Local mode does not append parent component pivot position.</param>
         /// <returns>Translated position</returns>
-        private PointF CreateOnCanvasAt(GH_ActiveObject obj, int index, bool local, double offsetX, double offsetY)
+        private PointF CreateOnCanvasAt(GH_ActiveObject obj, int index, double offsetX, double offsetY)
         {
-            float locX;
-            float locY;
-            if (local)
-            {
-                locX = Component.Attributes.DocObject.Attributes.Bounds.X;
-                locY = Component.Attributes.DocObject.Attributes.Bounds.Y;
-                
-            }
-            else
-            {
-                var pivot = Component.Attributes.Pivot;
-                locX = Component.Attributes.DocObject.Attributes.Bounds.X + pivot.X;
-                locY = Component.Attributes.DocObject.Attributes.Bounds.Y + pivot.Y;
-            }
+            var pivot = Component.Attributes.Pivot;
+            var componentBoundX = Component.Attributes.Bounds.Width;
+            var componentBoundY = Component.Attributes.Bounds.Height;
 
-            int inputCount = Component.Params.Input.Count;
-            locX = locX - obj.Attributes.Bounds.Width + (float)offsetX;
-            locY = locY - Component.Params.Input[index].Attributes.Bounds.Y + inputCount * 15 - (float)offsetY;
+            float locX = componentBoundX + pivot.X;
+            float locY = componentBoundY + pivot.Y;
+
+            var objWidth = obj.Attributes.Bounds.Width;
+            var objAttributeHeight = Component.Params.Input[index].Attributes.Bounds.Height;
+
+            locX = locX - objWidth + (float)offsetX;
+            locY = (locY - objAttributeHeight) + (float)offsetY;
 
             return new PointF(locX, locY);
         }

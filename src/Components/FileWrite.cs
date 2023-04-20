@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using Grasshopper.Kernel;
 using Monkey.src.InputComponents;
 using Monkey.src.UI;
@@ -11,77 +12,115 @@ namespace Monkey.src.Components
 {
     public class FileWrite : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the FileWrite class.
-        /// </summary>
+        #region Metadata
+
         public FileWrite()
-          : base("File Write", "Write",
-              "Write content to a file. Input content must be pre-formatted to correctly export.",
-              "Monkey", "File")
+            : base("File Write", "Write",
+                "Write content to a file. Input content must be pre-formatted to correctly export.",
+                "Monkey", "File")
         {
         }
 
         public override GH_Exposure Exposure => GH_Exposure.tertiary;
+        public override IEnumerable<string> Keywords => new string[] { "write", "write file" };
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.FileWrite;
+        public override Guid ComponentGuid => new Guid("08A598CC-471D-4970-AE2C-0EC50E334EF4");
 
-        public override IEnumerable<string> Keywords
+        #endregion
+
+        #region IO
+
+        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            get
-            {
-                return new string[] { "write" };
-            }
+            pManager.AddTextParameter("Content", "C", "Content to write to file.", GH_ParamAccess.item);
+            pManager.AddTextParameter("[]Path", "[]P", "File path to write.", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Write", "W", "Write content to file.", GH_ParamAccess.item, false);
+
+            Params.Input[0].Optional = true;
+            Params.Input[1].Optional = true;
         }
 
-        public override void AddedToDocument(GH_Document document)
+
+        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            base.AddedToDocument(document);
-            if (this.Params.Input[1].SourceCount != 0) return;
+            pManager.AddTextParameter("Info", "I", "Output information.", GH_ParamAccess.list);
+        }
 
-            var input = new ComponentInput(document, this);
+        #endregion
 
-            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0);
+        #region Context Menu
+
+        protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
+        {
+            base.AppendAdditionalComponentMenuItems(menu);
+            Menu_AppendItem(menu, "Create Path", Spawn, Properties.Resources.Add_New);
+        }
+
+        private void Spawn(object sender, EventArgs e)
+        {
+            RecordUndoEvent("CreatePath");
+            SpawnComponent();
+            ExpireSolution(true);
+        }
+
+        private void SpawnComponent()
+        {
+            if (Params.Input[1].SourceCount != 0) return;
+
+            var input = new ComponentInput(OnPingDocument(), this);
+            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0, -40, -70);
             if (filePathComponent is FileCreatePath filePath)
             {
                 filePath.ChangeValueList("text");
                 filePath.MenuCategory = "text";
                 filePath.ExpireSolution(true);
             }
-
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        #endregion
+
+        #region Button
+
+        public override void CreateAttributes()
         {
-            pManager.AddTextParameter("Content", "C", "Content to write to file.", GH_ParamAccess.item);
-            pManager.AddTextParameter("[]Path", "[]P", "File path to write.", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Write", "W", "Write content to file.", GH_ParamAccess.item, false);
+            m_attributes = new ComponentButton(this, "Write", Write);
         }
-
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        private void Write()
         {
-            pManager.AddTextParameter("Info", "I", "Output information.", GH_ParamAccess.list);
+            writeBut = true;
+            ExpireSolution(true);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             string content = null;
             string path = null;
             bool write = false;
-            if (!DA.GetData(0, ref content)) return;
-            if (!DA.GetData(1, ref path)) return;
+            DA.GetData(0, ref content);
+            DA.GetData(1, ref path);
             if (!DA.GetData(2, ref write)) return;
 
             
             if (write || writeBut)
             {
+                if (content == null)
+                {
+                    MessageBox.Show("Error: No content to write!\n\nPlease make sure content input is not empty.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DA.AbortComponentSolution();
+                    return;
+                }
+
+                if (path == null)
+                {
+                    MessageBox.Show("Error: No path to write to!\n\nPlease make sure path input is not empty.", "Error",
+                                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DA.AbortComponentSolution();
+                    return;
+                }
+
                 msgs.Clear();
                 try
                 {
@@ -99,39 +138,14 @@ namespace Monkey.src.Components
             DA.SetDataList(0, msgs);
 
         }
+
+        #region Addition
+
         List<string> msgs = new List<string>();
         private bool writeBut;
 
-        private void Write()
-        {
-            writeBut = true;
-            ExpireSolution(true);
-        }
+        #endregion
 
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "Write", Write);
-        }
 
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.FileWrite;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("08A598CC-471D-4970-AE2C-0EC50E334EF4"); }
-        }
     }
 }
