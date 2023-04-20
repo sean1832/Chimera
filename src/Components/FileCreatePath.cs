@@ -124,6 +124,7 @@ namespace Monkey.src.Components
 
         private void OpenDirectory(object sender, EventArgs e)
         {
+            string _path = Path.GetDirectoryName(path);
             if (path == null)
             {
                 MessageBox.Show("Warning: path is empty!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -131,11 +132,11 @@ namespace Monkey.src.Components
             }
             try
             {
-                System.Diagnostics.Process.Start(path);
+                System.Diagnostics.Process.Start(_path);
             }
             catch (Exception ex)
             { 
-                MessageBox.Show($"Unable to open directory!\nIs path {path} exist?\n\n\n{ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Unable to open directory!\nIs path {_path} exist?\n\n\n{ex}", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
