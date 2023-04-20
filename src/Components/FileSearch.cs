@@ -43,7 +43,7 @@ namespace Monkey.src.Components
             pManager.AddBooleanParameter("Subfolder", "Sub", "Whether the search should include subdirectories or not.",
                 GH_ParamAccess.item, false);
 
-            pManager[1].Optional = true;
+            pManager[0].Optional = true;
         }
 
         /// <summary>
@@ -60,19 +60,26 @@ namespace Monkey.src.Components
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string directory = null;
-            string pattern = "*.*";
-            bool subfolder = false;
-            if (!DA.GetData(0, ref directory)) return;
-            if (!DA.GetData(0, ref pattern)) pattern = "*.*";
-            if (!DA.GetData(0, ref subfolder)) return;
-            List<string> source = new List<string>();
-            if (directory != null)
-            {
-                source.AddRange(System.IO.Directory.GetFiles(directory, pattern, subfolder ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly));
-            }
-            DA.SetDataList(0, source);
+            // Declare and initialize input variables
+            string inputDirectory = null;
+            string filePattern = "*.*";
+            bool searchSubfolders = false;
+
+            // Get input data, with default values if not provided
+            if (!DA.GetData(0, ref inputDirectory)) return;
+            DA.GetData(1, ref filePattern);
+            DA.GetData(2, ref searchSubfolders);
+
+            // Determine the search option based on the 'searchSubfolders' input
+            System.IO.SearchOption searchOption = searchSubfolders ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly;
+
+            // Get the list of files in the directory
+            List<string> fileList = new List<string>(System.IO.Directory.GetFiles(inputDirectory, filePattern, searchOption));
+
+            // Set the output data
+            DA.SetDataList(0, fileList);
         }
+
 
 
         /// <summary>
