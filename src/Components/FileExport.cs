@@ -108,7 +108,7 @@ namespace Monkey.src.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            var spawn = Menu_AppendItem(menu, "Create Path", ToggleSpawn, Properties.Resources.Add_New);
+            var spawn = Menu_AppendItem(menu, "Create Path", Spawn, Properties.Resources.Add_New);
             spawn.ToolTipText = "Create a new path input.";
 
             ToolStripMenuItem bind = Menu_AppendItem(menu, "Group Mode", ToggleBind, Properties.Resources.Product_Box_03_WF,true, IsGroupExport);
@@ -122,13 +122,26 @@ namespace Monkey.src.Components
             ExpireSolution(true);
         }
 
-        private void ToggleSpawn(object sender, EventArgs e)
+        private void Spawn(object sender, EventArgs e)
         {
-            RecordUndoEvent("ToggleSpawn");
+            RecordUndoEvent("CreatePath");
             SpawnComponent();
             ExpireSolution(true);
         }
 
+        private void SpawnComponent()
+        {
+            if (this.Params.Input[1].SourceCount != 0) return;
+
+            var input = new ComponentInput(OnPingDocument(), this);
+            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0, -40, -70);
+            if (filePathComponent is FileCreatePath filePath)
+            {
+                filePath.ChangeValueList("object");
+                filePath.MenuCategory = "object";
+                filePath.ExpireSolution(true);
+            }
+        }
 
         #endregion
 
@@ -230,19 +243,7 @@ namespace Monkey.src.Components
 
         #region Additional
 
-        private void SpawnComponent()
-        {
-            if (this.Params.Input[1].SourceCount != 0) return;
-
-            var input = new ComponentInput(OnPingDocument(), this);
-            var filePathComponent = input.CreateCustomComponentAt<FileCreatePath>(1, 0, -40, -70);
-            if (filePathComponent is FileCreatePath filePath)
-            {
-                filePath.ChangeValueList("object");
-                filePath.MenuCategory = "object";
-                filePath.ExpireSolution(true);
-            }
-        }
+       
 
         #endregion
 
