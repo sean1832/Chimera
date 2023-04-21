@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Grasshopper.Kernel;
+using Monkey.src.UI;
 using Rhino.Geometry;
 
 namespace Monkey.src.Components
@@ -41,6 +42,19 @@ namespace Monkey.src.Components
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Source", "S", "Found files path.", GH_ParamAccess.list);
+        }
+
+        #endregion
+
+        #region Button
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Refresh", Refresh);
+        }
+        private void Refresh()
+        {
+            ExpireSolution(true);
         }
 
         #endregion
