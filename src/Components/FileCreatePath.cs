@@ -101,8 +101,8 @@ namespace Monkey.src.Components
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "Create Extensions", ToggleSpawn, Properties.Resources.Add_New);
             Menu_AppendItem(menu, "Open Directory", OpenDirectory, Properties.Resources.Window_New_Open);
+            Menu_AppendItem(menu, "Create Extensions", ToggleSpawn, Properties.Resources.Add_New);
             Menu_AppendSeparator(menu);
 
             // Create the 'Presets' sub-menu
