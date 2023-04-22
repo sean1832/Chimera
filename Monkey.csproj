@@ -7,7 +7,7 @@
     <TargetExt>.gha</TargetExt>
     <LangVersion>8</LangVersion>
     <Authors>Zeke Zhang</Authors>
-    <Version>0.0.1</Version>
+    <Version>0.0.2-alpha</Version>
     <AssemblyVersion></AssemblyVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Rhino;Grasshopper</PackageTags>
