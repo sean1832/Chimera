@@ -19,7 +19,7 @@ namespace Monkey.src.Components
         }
         public override GH_Exposure Exposure => GH_Exposure.secondary;
         public override IEnumerable<string> Keywords => new string[] { "dependency", "requirements", "assembly", "assemblyinfo", "plugins" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.Dependency; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("2f210d7b-c155-4598-98b6-b4c557224175");
 
         #endregion
