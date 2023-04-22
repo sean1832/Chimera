@@ -30,7 +30,7 @@ namespace Monkey.src.Components
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddPointParameter("Origin", "Origin", "The world origin", GH_ParamAccess.item);
+            pManager.AddPointParameter("Origin", "O", "The world origin", GH_ParamAccess.item);
         }
 
         #endregion
