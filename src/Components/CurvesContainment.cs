@@ -32,6 +32,8 @@ namespace Monkey.src.Components
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curves", "Crvs", "The curves to analyze.", GH_ParamAccess.list);
+
+            Params.Input[0].Optional = true;
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -42,30 +44,74 @@ namespace Monkey.src.Components
 
         #endregion
 
+        #region ClassVariables
+
+        private int _sampleCount = 2;
+        public int SampleCount
+        {
+            get => _sampleCount;
+            set
+            {
+                _sampleCount = value;
+                Message = $"SampleCount: {_sampleCount}";
+            }
+        }
+
+        #endregion
+
+        #region (De)Serialization
+
+        public override bool Write(GH_IO.Serialization.GH_IWriter writer)
+        {
+            // First add our own field.
+            writer.SetInt32("SampleCount", SampleCount);
+            // Then call the base class implementation.
+            return base.Write(writer);
+        }
+        public override bool Read(GH_IO.Serialization.GH_IReader reader)
+        {
+            // First read our own field.
+            try
+            {
+                SampleCount = reader.GetInt32("SampleCount");
+            }
+            catch (Exception e)
+            {
+                // default value
+                SampleCount = 2;
+            }
+            // Then call the base class implementation.
+            return base.Read(reader);
+        }
+
+        #endregion
+
         #region Context Menu
 
-        private int sampleCount = 2;
         protected override void AppendAdditionalComponentMenuItems(ToolStripDropDown menu)
         {
             base.AppendAdditionalComponentMenuItems(menu);
-            Menu_AppendItem(menu, "SamplePoint 2", Toggle2, true).Checked = sampleCount == 2;
-            Menu_AppendItem(menu, "SamplePoint 4", Toggle4, true).Checked = sampleCount == 4;
-            Menu_AppendItem(menu, "SamplePoint 6", Toggle6, true).Checked = sampleCount == 6;
+            Menu_AppendItem(menu, "SamplePoints 2", Toggle2, true).Checked = SampleCount == 2;
+            Menu_AppendItem(menu, "SamplePoints 20", Toggle20, true).Checked = SampleCount == 20;
+            Menu_AppendItem(menu, "SamplePoints 100", Toggle100, true).Checked = SampleCount == 100;
         }
 
         private void Toggle2(object sender, EventArgs e)
         {
-            sampleCount = 2;
+            RecordUndoEvent("SamplePoints 2");
+            SampleCount = 2;
             ExpireSolution(true);
         }
-        private void Toggle4(object sender, EventArgs e)
+        private void Toggle20(object sender, EventArgs e)
         {
-            sampleCount = 4;
+            RecordUndoEvent("SamplePoints 20");
+            SampleCount = 20;
             ExpireSolution(true);
         }
-        private void Toggle6(object sender, EventArgs e)
+        private void Toggle100(object sender, EventArgs e)
         {
-            sampleCount = 6;
+            RecordUndoEvent("SamplePoints 100");
+            SampleCount = 100;
             ExpireSolution(true);
         }
         #endregion
@@ -220,9 +266,9 @@ namespace Monkey.src.Components
                 curve2 = curve2.ToNurbsCurve();
             }
 
-            for (int i = 0; i < sampleCount; i++)
+            for (int i = 0; i < SampleCount; i++)
             {
-                double t = (double)i / (sampleCount - 1);
+                double t = (double)i / (SampleCount - 1);
                 Point3d pt1 = curve1.PointAtNormalizedLength(t);
                 Point3d pt2 = curve2.PointAtNormalizedLength(t);
 
