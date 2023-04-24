@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Chimera.Properties;
 using Grasshopper.Kernel;
 using Color = System.Drawing.Color;
 
@@ -7,24 +9,24 @@ namespace Chimera.Components
 {
     public class Counter : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the MyComponent1 class.
-        /// </summary>
+        #region Metadata
+
         public Counter()
-          : base("MK_Counter", "Counter",
-              "Count number at a given range",
-              "Chimera", "Utility")
+            : base("MK_Counter", "Counter",
+                "Count number at a given range",
+                "Chimera", "Utility")
         {
         }
 
-        private GH_Document GrasshopperDocument;
-        private IGH_Component Component;
-        private int counter;
+        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override IEnumerable<string> Keywords => new string[] { "counter" };
+        protected override Bitmap Icon => Resources.Counter;
+        public override Guid ComponentGuid => new Guid("285A1064-3416-43A2-A7FC-AED8732A1A1A");
 
+        #endregion
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+        #region IO
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddBooleanParameter("Run", "Run", "Executing the component", GH_ParamAccess.item, false);
@@ -33,33 +35,25 @@ namespace Chimera.Components
                 "The maximum number to count until it is stopped.\nDefault 15", GH_ParamAccess.item, 15);
             pManager.AddIntegerParameter("Interval", "interval",
                 "The interval in millisecond (ms) between each count.\nDefault 150.", GH_ParamAccess.item, 150);
-            ;
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddIntegerParameter("Count", "C", "Current count", GH_ParamAccess.item);
         }
 
+        #endregion
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #region ClassLevelVariables
+
+        private GH_Document GrasshopperDocument;
+        private IGH_Component Component;
+        private int counter;
+
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            #region Variables
-
-            Component = this;
-            GrasshopperDocument = OnPingDocument();
-
-            #endregion
-
-            #region Inputs
-
             bool run = false;
             int startNum = 0;
             int targetNum = 15;
@@ -69,8 +63,6 @@ namespace Chimera.Components
             if (!DA.GetData(1, ref startNum)) return;
             if (!DA.GetData(2, ref targetNum)) return;
             if (!DA.GetData(3, ref interval)) return;
-
-            #endregion
 
             ChangeInputSlider("Interval", 50, 15000, "interval", "interval");
             #region Error Handeling
@@ -120,6 +112,8 @@ namespace Chimera.Components
             // output
             DA.SetData(0, counter);
         }
+
+        #region Additional
 
         public void ChangeInputSlider(string targetInputName, int min, int max, string inputAlteredName,
             string inputAlterNickname)
@@ -187,7 +181,6 @@ namespace Chimera.Components
             }
         }
 
-        protected override System.Drawing.Bitmap Icon => Properties.Resources.Counter;
-        public override Guid ComponentGuid => new Guid("285A1064-3416-43A2-A7FC-AED8732A1A1A");
+        #endregion
     }
 }

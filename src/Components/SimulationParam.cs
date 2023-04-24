@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Chimera.Properties;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
 
@@ -7,37 +9,37 @@ namespace Chimera.Components
 {
     public class SimulationParam : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the MK_SimulationParam class.
-        /// </summary>
+        #region Metadata
+
         public SimulationParam()
-          : base("Simulation Attributes", "Attributes",
-              "Simulation attributes for Monkey.",
-              "Chimera", "Utility")
+            : base("Simulation Attributes", "Attributes",
+                "Simulation attributes for Monkey.",
+                "Chimera", "Utility")
         {
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override IEnumerable<string> Keywords => new string[] { "attributes", "simattri" };
+        protected override Bitmap Icon => Resources.Simulation_Parameters;
+        public override Guid ComponentGuid => new Guid("6424E833-46AE-4A8F-90C9-C6AF9E06EBC4");
+
+        #endregion
+
+        #region IO
+
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddIntegerParameter("Interval", "I", "Speed (ms) of iteration", GH_ParamAccess.item, (int)10);
             pManager.AddIntegerParameter("MaxStep", "MxS", "Maximum step of iteration.", GH_ParamAccess.item, (int)50);
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Attributes", "A", "Output attributes for Monkey simulation.", GH_ParamAccess.item);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             int interval = 0;
@@ -66,27 +68,6 @@ namespace Chimera.Components
             };
             var json = JsonConvert.SerializeObject(param, Formatting.Indented);
             DA.SetData(0, json);
-        }
-
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.Simulation_Parameters;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("6424E833-46AE-4A8F-90C9-C6AF9E06EBC4"); }
         }
     }
 }

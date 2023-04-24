@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Chimera.Properties;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -7,42 +9,37 @@ namespace Chimera.Components
 {
     public class PolylineMesh : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the PolylineMesh class.
-        /// </summary>
+        #region Metadata
+
         public PolylineMesh()
-          : base("PolylineMesh", "PolyMesh",
-              "Using polyline to construct a mesh",
-              "Chimera", "Geometry")
+            : base("PolylineMesh", "PolyMesh",
+                "Using polyline to construct a mesh",
+                "Chimera", "Geometry")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "polylinemesh", "polylinemesh" };
         public override Guid ComponentGuid => new Guid("7E65648F-386D-49DF-AC3E-1125A0020331");
-        protected override System.Drawing.Bitmap Icon => Properties.Resources.PolyMesh;
+        protected override Bitmap Icon => Resources.PolyMesh;
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        #endregion
+
+        #region IO
+
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curve", "C", "input curve", GH_ParamAccess.item);
             pManager.AddIntegerParameter("PolylineSegment", "S", "Optional segment for the curve to divide.",
                 GH_ParamAccess.item, 0);
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddMeshParameter("Mesh", "M", "output mesh", GH_ParamAccess.item);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;

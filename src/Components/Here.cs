@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using Chimera.Properties;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
@@ -9,50 +11,49 @@ namespace Chimera.Components
 {
     public class Here : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the Here class.
-        /// </summary>
+        #region Metadata
+
         public Here()
-          : base("Here", "here",
-              "Finds the path location of current script.",
-              "Chimera", "File")
+            : base("Here", "here",
+                "Finds the path location of current script.",
+                "Chimera", "File")
         {
         }
-
         public override GH_Exposure Exposure => GH_Exposure.secondary;
+        public override IEnumerable<string> Keywords => new string[] { "here" };
+        protected override Bitmap Icon => Resources.Here;
+        public override Guid ComponentGuid => new Guid("59011623-9050-4E5E-B0D4-C17C20B13929");
 
-        /// <summary>
-        /// Overrides the Description property to include the desired keywords.
-        /// </summary>
-        public override IEnumerable<string> Keywords
-        {
-            get
-            {
-                return new string[] { "here" };
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        #region IO
+
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Folder Path", "fP", "Current file name as folder path.", GH_ParamAccess.item);
             pManager.AddTextParameter("Directory", "Dir", "Directory of current script.", GH_ParamAccess.item);
             pManager.AddTextParameter("Script Path", "P", "Current script path.", GH_ParamAccess.item);
         }
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #endregion
+
+        #region Button
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "OpenDir", OpenDir);
+        }
+        private void OpenDir()
+        {
+            Process.Start(directory);
+        }
+
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             string fullPath = this.OnPingDocument().FilePath;
@@ -66,37 +67,16 @@ namespace Chimera.Components
             DA.SetData(2, fullPath);
         }
 
+        #region Additional
+
         private string directory;
 
-        private void OpenDir()
-        {
-            Process.Start(directory);
-        }
+        #endregion
 
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "OpenDir", OpenDir);
-        }
 
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.Here;
-            }
-        }
 
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("59011623-9050-4E5E-B0D4-C17C20B13929"); }
-        }
+
+        
+
     }
 }

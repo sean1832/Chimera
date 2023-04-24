@@ -6,21 +6,15 @@ using Rhino.Geometry;
 
 namespace Chimera.Components
 {
-    public class DLAVisualzier : GH_Component
+    public class DLAVisualizer : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the DLAVisualzier class.
-        /// </summary>
-        public DLAVisualzier()
-          : base("DLA Visualzier", "Visualizer",
-              "Visualization data from DLA lines. Plug with a lineweight preview.",
+        public DLAVisualizer()
+          : base("DLA Visualizer", "Visualizer",
+              "Visualization data from DLA lines. Plug with a line-weight preview.",
               "Chimera", "DLA")
         {
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("DLA Lines", "Ln", "List of DLA line.", GH_ParamAccess.list);
@@ -34,7 +28,7 @@ namespace Chimera.Components
             pManager.AddNumberParameter("Parameters", "P", "Parameters. *Plug with a 'Gradient' component.",
                 GH_ParamAccess.list);
             pManager.AddNumberParameter("Thickness", "T",
-                "Thickness for each lines. *Plug with a 'Custome Preview Lineweights' component.", GH_ParamAccess.list);
+                "Thickness for each lines. *Plug with a 'Custom Preview Line-weights' component.", GH_ParamAccess.list);
         }
 
         /// <summary>

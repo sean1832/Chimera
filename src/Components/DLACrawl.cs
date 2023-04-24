@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Chimera.Properties;
 using Chimera.UI;
 using Grasshopper.GUI;
 using Grasshopper.Kernel;
@@ -16,19 +17,23 @@ namespace Chimera.Components
 {
     public class DLACrawl : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the MK_DLACrawl class.
-        /// </summary>
+        #region Metadata
+
         public DLACrawl()
-          : base("DLA Crawl", "DLA",
-              "Diffusion Limited Aggregation walk on mesh surface. Attach a trigger to run.",
-              "Chimera", "DLA")
+            : base("DLA Crawl", "DLA",
+                "Diffusion Limited Aggregation walk on mesh surface. Attach a trigger to run.",
+                "Chimera", "DLA")
         {
         }
+        public override GH_Exposure Exposure => GH_Exposure.primary;
+        public override IEnumerable<string> Keywords => new string[] { "dlacrawl" };
+        protected override Bitmap Icon => Resources.DLA_Crawl;
+        public override Guid ComponentGuid => new Guid("A541F904-CCBE-4087-9E4E-3256CA2369E1");
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+        #endregion
+
+        #region IO
+
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddMeshParameter("Geo", "G", "Base mesh for the curve to crawl on.", GH_ParamAccess.item);
@@ -50,30 +55,37 @@ namespace Chimera.Components
             pManager[5].Optional = true; // make the attractor weight optional
         }
 
-        /// <summary>
-        /// Registers all the output parameters for this component.
-        /// </summary>
+
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddCurveParameter("DLA Line", "Ln", "Output of DLA Lines.", GH_ParamAccess.item);
         }
 
+        #endregion
 
-        /// <summary>
-        /// This is the method that actually does the work.
-        /// </summary>
-        /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
+        #region Button
+
+        public override void CreateAttributes()
+        {
+            m_attributes = new ComponentButton(this, "Simulate", Run);
+        }
+        private void Run()
+        {
+            run = true;
+            ExpireSolution(true);
+        }
+
+        #endregion
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            #region Inputs
-
             Mesh inGeo = new Mesh();
             Point3d pt = new Point3d();
             Curve attractor = new ArcCurve();
             string simParams = "";
             double scale = 0;
             double attractorWeight = 0;
-            
+
 
 
             if (!DA.GetData(0, ref inGeo)) return;
@@ -87,9 +99,6 @@ namespace Chimera.Components
             JObject jsonObject = JObject.Parse(simParams);
             int interval = jsonObject["interval"].Value<int>();
             int maxStep = jsonObject["maxStep"].Value<int>();
-
-
-            #endregion
 
             bool hasAttrCrv = false;
 
@@ -272,11 +281,7 @@ namespace Chimera.Components
         private bool rerun = false;
         private bool run = false;
 
-        private void Run()
-        {
-            run = true;
-            ExpireSolution(true);
-        }
+        
         private void Reset()
         {
             calculatedLines.Clear();
@@ -286,31 +291,9 @@ namespace Chimera.Components
         #endregion
 
 
+        
 
-        public override void CreateAttributes()
-        {
-            m_attributes = new ComponentButton(this, "Simulate", Run);
-        }
 
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.DLA_Crawl;
-            }
-        }
 
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("A541F904-CCBE-4087-9E4E-3256CA2369E1"); }
-        }
     }
 }
