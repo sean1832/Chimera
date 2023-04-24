@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Grasshopper;
 using Grasshopper.Kernel;
-using Rhino.Collections;
-using Rhino.Geometry;
 
-namespace Monkey.src
+namespace Chimera
 {
     internal static class Util
     {

@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Parameters;
-using Grasshopper.Kernel.Special;
-using Grasshopper.Kernel.Types;
-using Monkey.src.InputComponents;
 using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class PolylineMesh : GH_Component
     {
@@ -18,7 +13,7 @@ namespace Monkey.src.Components
         public PolylineMesh()
           : base("PolylineMesh", "PolyMesh",
               "Using polyline to construct a mesh",
-              "Monkey", "Geometry")
+              "Chimera", "Geometry")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

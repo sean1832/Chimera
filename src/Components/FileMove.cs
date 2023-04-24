@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Chimera.UI;
 using Grasshopper.Kernel;
-using Monkey.src.UI;
-using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileMove : GH_Component
     {
         public FileMove()
           : base("File Move", "File Move",
               "Move a list of files to a directory.",
-              "Monkey", "File")
+              "Chimera", "File")
         {
         }
 

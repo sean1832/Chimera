@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class CurvesContainment : GH_Component
     {
@@ -17,7 +17,7 @@ namespace Monkey.src.Components
         public CurvesContainment()
         : base("CurvesContainment", "CrvContain",
               "Partition a list of curves into interior and exterior curves.",
-              "Monkey", "Geometry")
+              "Chimera", "Geometry")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

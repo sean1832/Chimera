@@ -2,7 +2,7 @@
 	
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <Title>Monkey</Title>
+    <Title>Chimera</Title>
     <Description>Utility plugin that focus on local file/directory manipulation, curve simulation, and helper utilities for mesh and data sorting.</Description>
     <TargetExt>.gha</TargetExt>
     <LangVersion>8</LangVersion>
@@ -13,8 +13,6 @@
     <PackageTags>Rhino;Grasshopper</PackageTags>
     <Company>$(Authors)</Company>
     <Copyright>Copyright (c) 2023-$(CurrentYear) $(Authors)</Copyright>
-    <PackageProjectUrl>https://github.com/sean1832/Monkey</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/sean1832/Monkey</RepositoryUrl>
   </PropertyGroup>
   
   <ItemGroup>
@@ -41,13 +39,7 @@
     </EmbeddedResource>
   </ItemGroup>
   
-  <ItemGroup>
-    <None Update="Resources\Monkey - Counter.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
-  <ItemGroup>
+	<ItemGroup>
     <Folder Include="Resources\Context Menu\" />
   </ItemGroup>
   
@@ -56,7 +48,7 @@
     <StartArguments>
 		/runscript="_-RunScript (
 		Set GH = Rhino.GetPlugInObject(""Grasshopper"")
-		Call GH.OpenDocument(""E:\_repository\03-Grasshopper\plugin\Monkey\ExampleGHScript\Monkey.gh"")
+		Call GH.OpenDocument(""E:\_repository\03-Grasshopper\plugin\Chimera\ExampleGHScript\Chimera.gh"")
 		)"</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Add-New" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Add_New" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Context Menu\Add-New.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ConstructPath" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -135,9 +135,6 @@
   </data>
   <data name="CurveContainment" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CurveContainment.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Decipher" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Decipher.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DeconstructPath" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DeconstructPath.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,13 +163,10 @@
   <data name="GroundPlane" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GroundPlane.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Hacker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Hacker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Here" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Here.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Layer Name" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Layer_Name" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Layer Name.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ListSegment" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -187,7 +181,7 @@
   <data name="PolyMesh" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PolyMesh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Product Box-03-WF" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Product_Box_03_WF" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Context Menu\Product Box-03-WF.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Simulation_Parameters" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -196,7 +190,7 @@
   <data name="SortByDirection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SortByDirection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Window-New-Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="Window_New_Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Context Menu\Window-New-Open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

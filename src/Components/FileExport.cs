@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SqlTypes;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml.Linq;
+using Chimera.IO;
+using Chimera.Properties;
+using Chimera.UI;
 using Grasshopper.Kernel;
-using Monkey.Properties;
-using Monkey.src.InputComponents;
-using Monkey.src.UI;
 using Rhino.Geometry;
-using Rhino.NodeInCode;
 
-
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileExport : GH_Component
     {
@@ -22,7 +17,7 @@ namespace Monkey.src.Components
         public FileExport()
             : base("File Export", "Export",
                 "Export a grasshopper object to a designated path.",
-                "Monkey", "File")
+                "Chimera", "File")
         {
         }
 

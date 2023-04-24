@@ -1,11 +1,9 @@
-﻿using Grasshopper.Kernel;
-using Monkey.src.UI;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Security.Policy;
+using Chimera.UI;
+using Grasshopper.Kernel;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class AssemblyInfos : GH_Component
     {
@@ -14,7 +12,7 @@ namespace Monkey.src.Components
         public AssemblyInfos()
           : base("Dependency", "Depends",
               "Checks and outputs information about the plugins used in the current Grasshopper file, their versions, and the assembly info of all plugins available on this computer.",
-              "Monkey", "Utility")
+              "Chimera", "Utility")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.secondary;

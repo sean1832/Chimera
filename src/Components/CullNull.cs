@@ -3,7 +3,7 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class CullNull : GH_Component
     {
@@ -12,7 +12,7 @@ namespace Monkey.src.Components
         public CullNull()
           : base("CullNull", "CullNull",
               "Remove null item from a list",
-              "Monkey", "Data")
+              "Chimera", "Data")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

@@ -1,19 +1,11 @@
-﻿using Rhino.NodeInCode;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
-using Grasshopper.Kernel.Types;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Grasshopper.Kernel;
-using System.ComponentModel;
 using Grasshopper.Kernel.Special;
-using Monkey.src.Components;
 
-namespace Monkey.src.InputComponents
+namespace Chimera.IO
 {
     internal class ComponentInput
     {

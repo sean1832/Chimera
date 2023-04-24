@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Versioning;
-using Eto.Drawing;
 using Grasshopper.Kernel;
-using Rhino;
-using Rhino.Geometry;
-using Rhino.Render.DataSources;
 using Color = System.Drawing.Color;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class Counter : GH_Component
     {
@@ -18,7 +13,7 @@ namespace Monkey.src.Components
         public Counter()
           : base("MK_Counter", "Counter",
               "Count number at a given range",
-              "Monkey", "Utility")
+              "Chimera", "Utility")
         {
         }
 
@@ -192,25 +187,7 @@ namespace Monkey.src.Components
             }
         }
 
-        /// <summary>
-        /// Provides an Icon for the component.
-        /// </summary>
-        protected override System.Drawing.Bitmap Icon
-        {
-            get
-            {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return Properties.Resources.Counter;
-            }
-        }
-
-        /// <summary>
-        /// Gets the unique ID for this component. Do not change this ID after release.
-        /// </summary>
-        public override Guid ComponentGuid
-        {
-            get { return new Guid("285A1064-3416-43A2-A7FC-AED8732A1A1A"); }
-        }
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.Counter;
+        public override Guid ComponentGuid => new Guid("285A1064-3416-43A2-A7FC-AED8732A1A1A");
     }
 }

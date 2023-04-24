@@ -5,18 +5,17 @@ using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Chimera.IO;
+using Chimera.UI;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
-using Monkey.src.InputComponents;
-using Monkey.src.IO;
-using Monkey.src.UI;
 using Rhino.Geometry;
 using Rhino.Runtime;
 using Rhino.Runtime.RhinoAccounts;
 
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileCreatePath : GH_Component
     {
@@ -24,7 +23,7 @@ namespace Monkey.src.Components
         public FileCreatePath()
             : base("Create Path", "Path",
                 "Create a file path",
-                "Monkey", "File")
+                "Chimera", "File")
         {
         }
 

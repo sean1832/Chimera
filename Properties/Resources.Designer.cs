@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Monkey.Properties {
+namespace Chimera.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Monkey.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Monkey.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chimera.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace Monkey.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Add_New {
             get {
-                object obj = ResourceManager.GetObject("Add-New", resourceCulture);
+                object obj = ResourceManager.GetObject("Add_New", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,16 +116,6 @@ namespace Monkey.Properties {
         internal static System.Drawing.Bitmap CurveContainment {
             get {
                 object obj = ResourceManager.GetObject("CurveContainment", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Decipher {
-            get {
-                object obj = ResourceManager.GetObject("Decipher", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,16 +213,6 @@ namespace Monkey.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Hacker {
-            get {
-                object obj = ResourceManager.GetObject("Hacker", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Here {
             get {
                 object obj = ResourceManager.GetObject("Here", resourceCulture);
@@ -245,7 +225,7 @@ namespace Monkey.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Layer_Name {
             get {
-                object obj = ResourceManager.GetObject("Layer Name", resourceCulture);
+                object obj = ResourceManager.GetObject("Layer_Name", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -295,7 +275,7 @@ namespace Monkey.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Product_Box_03_WF {
             get {
-                object obj = ResourceManager.GetObject("Product Box-03-WF", resourceCulture);
+                object obj = ResourceManager.GetObject("Product_Box_03_WF", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -325,7 +305,7 @@ namespace Monkey.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap Window_New_Open {
             get {
-                object obj = ResourceManager.GetObject("Window-New-Open", resourceCulture);
+                object obj = ResourceManager.GetObject("Window_New_Open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

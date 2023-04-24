@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
+using Chimera.IO;
+using Chimera.UI;
 using Grasshopper.Kernel;
-using Monkey.src.InputComponents;
-using Monkey.src.UI;
-using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileWrite : GH_Component
     {
@@ -17,7 +15,7 @@ namespace Monkey.src.Components
         public FileWrite()
             : base("File Write", "Write",
                 "Write content to a file. Input content must be pre-formatted to correctly export.",
-                "Monkey", "File")
+                "Chimera", "File")
         {
         }
 

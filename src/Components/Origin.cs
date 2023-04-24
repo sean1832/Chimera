@@ -1,9 +1,9 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Grasshopper.Kernel;
+using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class Origin : GH_Component
     {
@@ -12,7 +12,7 @@ namespace Monkey.src.Components
         public Origin()
           : base("Origin", "Origin",
               "Get the world origin",
-              "Monkey", "Geometry")
+              "Chimera", "Geometry")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

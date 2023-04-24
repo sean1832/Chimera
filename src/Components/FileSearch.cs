@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Chimera.UI;
 using Grasshopper.Kernel;
-using Monkey.src.UI;
-using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileSearch : GH_Component
     {
@@ -14,7 +12,7 @@ namespace Monkey.src.Components
         public FileSearch()
             : base("File Search", "Search",
                 "Search for files in a specified directory based on a given file name pattern.",
-                "Monkey", "File")
+                "Chimera", "File")
         {
         }
 

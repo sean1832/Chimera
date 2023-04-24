@@ -1,11 +1,9 @@
-﻿using GH_IO.Serialization;
-using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Grasshopper.Kernel;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class ListSegment : GH_Component
     {
@@ -14,7 +12,7 @@ namespace Monkey.src.Components
         public ListSegment()
           : base("ListSegment", "ListSeg",
               "Extracts first, last, and middle n items from a list.",
-              "Monkey", "Data")
+              "Chimera", "Data")
         {
         }
 

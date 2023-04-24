@@ -1,12 +1,11 @@
-﻿using Grasshopper;
-using Grasshopper.Kernel;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Reflection;
+using Grasshopper.Kernel;
 
-namespace Monkey.src
+namespace Chimera
 {
-    public class MonkeyInfo : GH_AssemblyInfo
+    public class ChimeraInfo : GH_AssemblyInfo
     {
         public override string Name => GetInfo<AssemblyProductAttribute>().Product;
         public override string Version => GetInfo<AssemblyInformationalVersionAttribute>().InformationalVersion;

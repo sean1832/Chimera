@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class DLAVisualzier : GH_Component
     {
@@ -14,7 +14,7 @@ namespace Monkey.src.Components
         public DLAVisualzier()
           : base("DLA Visualzier", "Visualizer",
               "Visualization data from DLA lines. Plug with a lineweight preview.",
-              "Monkey", "DLA")
+              "Chimera", "DLA")
         {
         }
 

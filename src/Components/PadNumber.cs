@@ -1,9 +1,8 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Grasshopper.Kernel;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class PadNumber : GH_Component
     {
@@ -12,7 +11,7 @@ namespace Monkey.src.Components
         public PadNumber()
           : base("PadNumber", "PadNum",
               "Pads a number with zeros based",
-              "Monkey", "Data")
+              "Chimera", "Data")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

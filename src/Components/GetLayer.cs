@@ -1,13 +1,11 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Grasshopper.Kernel;
 using Grasshopper.Kernel.Types;
 using Rhino;
 using Rhino.DocObjects;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class GetLayer : GH_Component
     {
@@ -16,7 +14,7 @@ namespace Monkey.src.Components
         public GetLayer()
           : base("GetLayerName", "GetLayer",
               "Get reference object layer name",
-              "Monkey", "Utility")
+              "Chimera", "Utility")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

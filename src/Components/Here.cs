@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Cryptography;
+using Chimera.UI;
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Special;
-using Monkey.src.UI;
-using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class Here : GH_Component
     {
@@ -18,7 +15,7 @@ namespace Monkey.src.Components
         public Here()
           : base("Here", "here",
               "Finds the path location of current script.",
-              "Monkey", "File")
+              "Chimera", "File")
         {
         }
 

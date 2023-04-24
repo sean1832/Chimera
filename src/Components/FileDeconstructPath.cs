@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
-using Monkey.src.InputComponents;
-using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class FileDeconstructPath : GH_Component
     {
@@ -16,7 +13,7 @@ namespace Monkey.src.Components
         public FileDeconstructPath()
             : base("Deconstruct Path", "DePath",
                 "Deconstruct a path to its elements",
-                "Monkey", "File")
+                "Chimera", "File")
         {
         }
 

@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Chimera.UI;
 using Grasshopper.GUI;
 using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
 using Grasshopper.Kernel.Types;
-using Monkey.src.InputComponents;
-using Monkey.src.UI;
 using Rhino.Collections;
 using Rhino.Geometry;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Monkey.src.IO;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class DLACrawl : GH_Component
     {
@@ -24,7 +22,7 @@ namespace Monkey.src.Components
         public DLACrawl()
           : base("DLA Crawl", "DLA",
               "Diffusion Limited Aggregation walk on mesh surface. Attach a trigger to run.",
-              "Monkey", "DLA")
+              "Chimera", "DLA")
         {
         }
 

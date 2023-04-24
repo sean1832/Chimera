@@ -1,10 +1,8 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Grasshopper.Kernel;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class CullDuplicates : GH_Component
     {
@@ -13,7 +11,7 @@ namespace Monkey.src.Components
         public CullDuplicates()
           : base("CullDuplicates", "CullDup",
               "Removes duplicates from a list of data.",
-              "Monkey", "Data")
+              "Chimera", "Data")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

@@ -1,11 +1,10 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Rhino.Geometry.Collections;
 using System.Linq;
+using Grasshopper.Kernel;
+using Rhino.Geometry;
 
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class GroundPlane : GH_Component
     {
@@ -14,7 +13,7 @@ namespace Monkey.src.Components
         public GroundPlane()
           : base("GroundPlane", "Ground",
               "Find the ground plane of a given geometry.",
-              "Monkey", "Geometry")
+              "Chimera", "Geometry")
         {
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;

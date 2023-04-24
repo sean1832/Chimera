@@ -1,14 +1,11 @@
-﻿using Grasshopper.Kernel;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Grasshopper.Kernel;
 using Rhino.Collections;
 using Rhino.Geometry;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Monkey.src
+namespace Chimera
 {
     internal class GH_Operations
     {

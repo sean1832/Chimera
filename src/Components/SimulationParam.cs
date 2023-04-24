@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Grasshopper.Kernel;
-using Rhino.Geometry;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-
-namespace Monkey.src.Components
+namespace Chimera.Components
 {
     public class SimulationParam : GH_Component
     {
@@ -17,7 +13,7 @@ namespace Monkey.src.Components
         public SimulationParam()
           : base("Simulation Attributes", "Attributes",
               "Simulation attributes for Monkey.",
-              "Monkey", "Utility")
+              "Chimera", "Utility")
         {
         }
 
