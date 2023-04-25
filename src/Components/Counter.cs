@@ -46,8 +46,6 @@ namespace Chimera.Components
 
         #region ClassLevelVariables
 
-        private GH_Document GrasshopperDocument;
-        private IGH_Component Component;
         private int counter;
 
         #endregion
@@ -65,6 +63,7 @@ namespace Chimera.Components
             if (!DA.GetData(3, ref interval)) return;
 
             ChangeInputSlider("Interval", 50, 15000, "interval", "interval");
+
             #region Error Handeling
 
             if (interval < 50)
@@ -91,7 +90,7 @@ namespace Chimera.Components
             {
                 if (counter < targetNum)
                 {
-                    GrasshopperDocument.ScheduleSolution(interval, d =>
+                    OnPingDocument().ScheduleSolution(interval, d =>
                     {
                         ExpireSolution(false);
                         counter++;
@@ -118,7 +117,7 @@ namespace Chimera.Components
         public void ChangeInputSlider(string targetInputName, int min, int max, string inputAlteredName,
             string inputAlterNickname)
         {
-            List<IGH_Param> inputs = Component.Params.Input;
+            List<IGH_Param> inputs = Params.Input;
             foreach (IGH_Param input in inputs)
             {
                 if (input.Name != targetInputName) continue;
@@ -153,7 +152,7 @@ namespace Chimera.Components
 
         public void ChangeInputToggle(string targetInputName, bool state)
         {
-            List<IGH_Param> inputs = Component.Params.Input;
+            List<IGH_Param> inputs = Params.Input;
             foreach (IGH_Param input in inputs)
             {
                 if (input.Name != targetInputName) continue;
