@@ -54,6 +54,10 @@ namespace Chimera.Components
             var dependency = ConvertDictToList(GetDependency());
             var assembly = ConvertDictToList(GetAllAssembly());
 
+            // sort alphabetically
+            dependency.Sort();
+            assembly.Sort();
+
             DA.SetDataList(0, dependency);
             DA.SetDataList(1, assembly);
         }
@@ -70,6 +74,7 @@ namespace Chimera.Components
 
                 if (assembly != null && !assembly.IsCoreLibrary)
                 {
+                    if (assembly.Name == "" || assembly.Name == null && assembly.Version == "" || assembly.Version == null) continue;
                     assemblyDict[assembly.Name] = assembly.Version;
                 }
             }
