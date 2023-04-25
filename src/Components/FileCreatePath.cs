@@ -274,7 +274,7 @@ namespace Chimera.Components
             }
             else
             {
-                path = directory + "\\" + filename + extension;
+                path = directory + filename + extension;
             }
 
             DA.SetData(0, path);
