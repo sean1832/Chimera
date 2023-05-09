@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Chimera.Components
+namespace Chimera.Components.Geometry
 {
     public class CurvesContainment : GH_Component
     {
@@ -29,14 +29,14 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curves", "Crvs", "The curves to analyze.", GH_ParamAccess.list);
 
             Params.Input[0].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddCurveParameter("Interior Curves", "IntC", "The interior curves.", GH_ParamAccess.list);
             pManager.AddCurveParameter("Exterior Curves", "ExtC", "The exterior curves.", GH_ParamAccess.list);
@@ -210,7 +210,7 @@ namespace Chimera.Components
                 }
             }
             exteriorCrvs.AddRange(parallelCrvs);
-            
+
         }
 
         private (List<Curve>, List<Curve>) RemoveDuplicates(List<Curve> curvesA, List<Curve> curvesB)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.DLA
 {
     public class DLAVisualizer : GH_Component
     {

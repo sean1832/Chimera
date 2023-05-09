@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.Geometry
 {
     public class Origin : GH_Component
     {
@@ -24,11 +24,11 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddPointParameter("Origin", "O", "The world origin", GH_ParamAccess.item);
         }

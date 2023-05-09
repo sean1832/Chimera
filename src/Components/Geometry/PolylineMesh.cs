@@ -5,7 +5,7 @@ using Chimera.Properties;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.Geometry
 {
     public class PolylineMesh : GH_Component
     {

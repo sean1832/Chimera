@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileSearch : GH_Component
     {
@@ -25,7 +25,7 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Directory", "Dir", "The target directory where the search will be performed.",
                 GH_ParamAccess.item);
@@ -37,7 +37,7 @@ namespace Chimera.Components
             pManager[0].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Source", "S", "Found files path.", GH_ParamAccess.list);
         }

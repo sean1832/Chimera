@@ -6,7 +6,7 @@ using Chimera.IO;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileWrite : GH_Component
     {

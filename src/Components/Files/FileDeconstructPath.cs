@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileDeconstructPath : GH_Component
     {
@@ -26,14 +26,14 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Path", "P", "File path", GH_ParamAccess.item);
 
-            this.Params.Input[0].Optional = true;
+            Params.Input[0].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Directory", "D", "Directory for the file.", GH_ParamAccess.item);
             pManager.AddTextParameter("Filename", "N", "File name for the file.", GH_ParamAccess.item);

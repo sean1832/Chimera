@@ -1,11 +1,9 @@
-﻿using Grasshopper.Kernel;
-using Rhino.Geometry;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using Grasshopper.Kernel;
 using Grasshopper.Kernel.Parameters;
 
-namespace Chimera.src.Components
+namespace Chimera.Components.Files
 {
     public class ConstructDirectory : GH_Component, IGH_VariableParameterComponent
     {
@@ -26,12 +24,12 @@ namespace Chimera.src.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Drive", "Dv", "Drive of the directory", GH_ParamAccess.item, "c");
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Directory", "Dir", "Directory", GH_ParamAccess.item);
         }

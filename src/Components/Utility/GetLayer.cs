@@ -5,7 +5,7 @@ using Grasshopper.Kernel.Types;
 using Rhino;
 using Rhino.DocObjects;
 
-namespace Chimera.Components
+namespace Chimera.Components.Utility
 {
     public class GetLayer : GH_Component
     {
@@ -26,12 +26,12 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGeometryParameter("Geometry", "Geo", "The reference geometry to find its layer.", GH_ParamAccess.item);
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Layer Path", "Path", "The full name of the layer the geometry belongs to.", GH_ParamAccess.item);
             pManager.AddTextParameter("Layer Name", "Name", "The base name of the layer without its parent.", GH_ParamAccess.item);

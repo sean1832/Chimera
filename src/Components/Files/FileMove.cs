@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileMove : GH_Component
     {
@@ -19,7 +19,7 @@ namespace Chimera.Components
         public override Guid ComponentGuid => new Guid("9EF2EF38-3D41-4952-A8DF-316CED99AAE4");
 
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Source", "S", "Location of the file you want to move.", GH_ParamAccess.list);
             pManager.AddTextParameter("Folder", "F", "Directory you want to move", GH_ParamAccess.item);
@@ -28,13 +28,13 @@ namespace Chimera.Components
             pManager.AddBooleanParameter("Run", "R", "Executing operation.", GH_ParamAccess.item, false);
         }
 
-        
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Info", "I", "Output information", GH_ParamAccess.list);
         }
 
-        
+
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             List<string> source = new List<string>();
@@ -88,7 +88,7 @@ namespace Chimera.Components
         #endregion
 
 
-        
+
 
         public override void CreateAttributes()
         {
@@ -97,10 +97,10 @@ namespace Chimera.Components
         private void Run()
         {
             run = true;
-            this.ExpireSolution(true);
+            ExpireSolution(true);
         }
 
-        
-        
+
+
     }
 }

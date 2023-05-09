@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using Chimera.IO;
 using Chimera.UI;
 using Grasshopper.Kernel;
-using Grasshopper.Kernel.Parameters;
 using Grasshopper.Kernel.Special;
-using Rhino.Geometry;
-using Rhino.Runtime;
-using Rhino.Runtime.RhinoAccounts;
 
-
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileCreatePath : GH_Component
     {

@@ -7,7 +7,7 @@ using Chimera.Properties;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class Here : GH_Component
     {
@@ -56,7 +56,7 @@ namespace Chimera.Components
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string fullPath = this.OnPingDocument().FilePath;
+            string fullPath = OnPingDocument().FilePath;
             directory = Path.GetDirectoryName(fullPath);
             string fileName = Path.GetFileNameWithoutExtension(fullPath);
             string folderPath = Path.Combine(directory, fileName);
@@ -76,7 +76,7 @@ namespace Chimera.Components
 
 
 
-        
+
 
     }
 }

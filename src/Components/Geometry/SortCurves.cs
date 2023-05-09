@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.Geometry
 {
     public class SortCurves : GH_Component
     {
@@ -24,13 +24,13 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curves", "C", "The curves to analyze.", GH_ParamAccess.list);
             pManager.AddNumberParameter("Tolerance", "T", "Tolerance of axis alignment.\nBetween 0 to 1", GH_ParamAccess.item, 0.9);
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddCurveParameter("X Curves", "X", "The curves in the X direction.", GH_ParamAccess.list);
             pManager.AddCurveParameter("Y Curves", "Y", "The curves in the Y direction.", GH_ParamAccess.list);

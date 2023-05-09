@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Chimera.UI;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Utility
 {
     public class AssemblyInfos : GH_Component
     {
@@ -24,11 +24,11 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("PluginDependency", "D", "Checks dependency of current Grasshopper file.", GH_ParamAccess.list);
             pManager.AddTextParameter("AssemblyInfo", "A", "Assembly info of all plugins available on this computer.", GH_ParamAccess.list);

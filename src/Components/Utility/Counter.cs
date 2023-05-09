@@ -5,7 +5,7 @@ using Chimera.Properties;
 using Grasshopper.Kernel;
 using Color = System.Drawing.Color;
 
-namespace Chimera.Components
+namespace Chimera.Components.Utility
 {
     public class Counter : GH_Component
     {

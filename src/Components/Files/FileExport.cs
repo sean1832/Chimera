@@ -8,7 +8,7 @@ using Chimera.UI;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.Files
 {
     public class FileExport : GH_Component
     {

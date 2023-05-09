@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Data
 {
     public class PadNumber : GH_Component
     {
@@ -23,7 +23,7 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddIntegerParameter("Number", "N", "The number to pad.", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Digits", "D", "The number of digits to pad to.", GH_ParamAccess.item, 1);
@@ -32,7 +32,7 @@ namespace Chimera.Components
             Params.Input[1].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Padded Number", "P", "The padded number.", GH_ParamAccess.item);
         }

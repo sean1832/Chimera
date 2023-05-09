@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Data
 {
     public class ListSegment : GH_Component
     {
@@ -25,7 +25,7 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("List", "L", "Input list", GH_ParamAccess.list);
             pManager.AddIntegerParameter("Number", "N", "Number of items to get from the list", GH_ParamAccess.item, 1);
@@ -34,7 +34,7 @@ namespace Chimera.Components
             Params.Input[1].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("First N Items", "F", "First N items of the input list", GH_ParamAccess.list);
             pManager.AddGenericParameter("Middle Items", "M", "Middle items of the input list", GH_ParamAccess.list);
@@ -69,7 +69,7 @@ namespace Chimera.Components
             {
                 Mode = Mode;
             }
-            
+
             // Then call the base class implementation.
             return base.Read(reader);
         }
@@ -200,14 +200,14 @@ namespace Chimera.Components
                 if (listLength % 2 == 0)
                 {
                     // even
-                    middleItems = inputList.GetRange(middleIndex - n, n*2);
+                    middleItems = inputList.GetRange(middleIndex - n, n * 2);
                     frontSection = inputList.GetRange(0, middleIndex - n);
                     backSection = inputList.GetRange(middleIndex + n, listLength - middleIndex - n);
                 }
                 else
                 {
                     // odd
-                    middleItems = inputList.GetRange(middleIndex - n, n*2+1);
+                    middleItems = inputList.GetRange(middleIndex - n, n * 2 + 1);
                     frontSection = inputList.GetRange(0, middleIndex - n);
                     backSection = inputList.GetRange(middleIndex + n + 1, listLength - middleIndex - n - 1);
                 }

@@ -3,7 +3,7 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace Chimera.Components
+namespace Chimera.Components.Data
 {
     public class CullNull : GH_Component
     {
@@ -24,12 +24,12 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Input List", "L", "The list to cull null items from.", GH_ParamAccess.list);
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddGenericParameter("Clean List", "C", "The list with null items removed.", GH_ParamAccess.list);
         }

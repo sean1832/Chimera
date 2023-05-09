@@ -4,7 +4,7 @@ using System.Linq;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
-namespace Chimera.Components
+namespace Chimera.Components.Geometry
 {
     public class GroundPlane : GH_Component
     {

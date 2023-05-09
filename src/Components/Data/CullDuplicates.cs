@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Grasshopper.Kernel;
 
-namespace Chimera.Components
+namespace Chimera.Components.Data
 {
     public class CullDuplicates : GH_Component
     {
@@ -23,14 +23,14 @@ namespace Chimera.Components
 
         #region IO
 
-        protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
+        protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Data", "D", "List of data to remove duplicates from", GH_ParamAccess.list);
 
             Params.Input[0].Optional = true;
         }
 
-        protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
+        protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.AddTextParameter("Cleaned Data", "C", "Cleaned list with duplicates removed", GH_ParamAccess.list);
         }

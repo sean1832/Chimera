@@ -5,7 +5,7 @@ using Chimera.Properties;
 using Grasshopper.Kernel;
 using Newtonsoft.Json;
 
-namespace Chimera.Components
+namespace Chimera.Components.Utility
 {
     public class SimulationParam : GH_Component
     {
@@ -29,8 +29,8 @@ namespace Chimera.Components
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddIntegerParameter("Interval", "I", "Speed (ms) of iteration", GH_ParamAccess.item, (int)10);
-            pManager.AddIntegerParameter("MaxStep", "MxS", "Maximum step of iteration.", GH_ParamAccess.item, (int)50);
+            pManager.AddIntegerParameter("Interval", "I", "Speed (ms) of iteration", GH_ParamAccess.item, 10);
+            pManager.AddIntegerParameter("MaxStep", "MxS", "Maximum step of iteration.", GH_ParamAccess.item, 50);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)

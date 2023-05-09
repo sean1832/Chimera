@@ -13,7 +13,7 @@ using Rhino.Geometry;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Chimera.Components
+namespace Chimera.Components.DLA
 {
     public class DLACrawl : GH_Component
     {
@@ -225,7 +225,7 @@ namespace Chimera.Components
                                 Point3d centerPt = line.PointAt(0.5);
                                 atrCenterPts.Add(centerPt);
                             }
-                            
+
                             // find closest attractor
                             int atrCPIndex;
                             double atrCPDist;
@@ -281,7 +281,7 @@ namespace Chimera.Components
         private bool rerun = false;
         private bool run = false;
 
-        
+
         private void Reset()
         {
             calculatedLines.Clear();
@@ -291,7 +291,7 @@ namespace Chimera.Components
         #endregion
 
 
-        
+
 
 
 
