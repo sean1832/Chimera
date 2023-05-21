@@ -30,7 +30,7 @@ namespace Chimera.Components.Files
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Content", "C", "Content to write to file.", GH_ParamAccess.item);
+            pManager.AddTextParameter("Content", "C", "Content to write to file.", GH_ParamAccess.list);
             pManager.AddTextParameter("[]Path", "[]P", "File path to write.", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Write", "W", "Write content to file.", GH_ParamAccess.item, false);
 
@@ -93,17 +93,17 @@ namespace Chimera.Components.Files
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string content = null;
+            List<string> contents = new List<string>();
             string path = null;
             bool write = false;
-            DA.GetData(0, ref content);
+            DA.GetDataList(0, contents);
             DA.GetData(1, ref path);
             if (!DA.GetData(2, ref write)) return;
 
             
             if (write || writeBut)
             {
-                if (content == null)
+                if (contents.Count == 0)
                 {
                     MessageBox.Show("Error: No content to write!\n\nPlease make sure content input is not empty.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -122,7 +122,9 @@ namespace Chimera.Components.Files
                 msgs.Clear();
                 try
                 {
-                    File.WriteAllText(path, content);
+                    string joinContent = string.Join(Environment.NewLine, contents);
+
+                    File.WriteAllText(path, joinContent);
                     string msg = $"Text has been written to the file '{path}'.";
                     msgs.Add(msg);
                 }

@@ -7,7 +7,7 @@
     <TargetExt>.gha</TargetExt>
     <LangVersion>8</LangVersion>
     <Authors>Zeke Zhang</Authors>
-    <Version>0.0.3-alpha</Version>
+    <Version>0.0.4-alpha</Version>
     <AssemblyVersion></AssemblyVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Rhino;Grasshopper</PackageTags>
@@ -41,6 +41,7 @@
   
 	<ItemGroup>
     <Folder Include="Resources\Context Menu\" />
+    <Folder Include="src\Components\Building\" />
   </ItemGroup>
   
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
