@@ -7,12 +7,13 @@
     <TargetExt>.gha</TargetExt>
     <LangVersion>8</LangVersion>
     <Authors>Zeke Zhang</Authors>
-    <Version>0.0.4-alpha</Version>
-    <AssemblyVersion></AssemblyVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <AssemblyVersion>0.0.5.1</AssemblyVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Rhino;Grasshopper</PackageTags>
     <Company>$(Authors)</Company>
     <Copyright>Copyright (c) 2023-$(CurrentYear) $(Authors)</Copyright>
+    <FileVersion>0.0.5.1</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
@@ -49,7 +50,7 @@
     <StartArguments>
 		/runscript="_-RunScript (
 		Set GH = Rhino.GetPlugInObject(""Grasshopper"")
-		Call GH.OpenDocument(""E:\_repository\03-Grasshopper\plugin\Chimera\ExampleGHScript\Chimera.gh"")
+		Call GH.OpenDocument(""H:\03-Grasshopper\plugin\Chimera\ExampleGHScript\Chimera.gh"")
 		)"</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
