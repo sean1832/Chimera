@@ -250,7 +250,13 @@ namespace Chimera.Components.Files
             DA.GetData(1, ref filename);
             DA.GetData(2, ref extension);
 
-            
+            if (Util.InputHasData(this, 0))
+            {
+                if (!directory.EndsWith("\\") && !directory.EndsWith("/"))
+                {
+                    directory += @"\";
+                }
+            }
 
             if (!Util.InputHasData(this, 0) && !Util.InputHasData(this, 1))
             {
