@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Chimera": {
+      "commandName": "Executable",
+      "executablePath": "D:\\Design\\3D\\Rhino\\Rhino 7\\System\\Rhino.exe"
+    }
+  }
+}

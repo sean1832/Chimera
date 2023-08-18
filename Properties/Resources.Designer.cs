@@ -73,6 +73,16 @@ namespace Chimera.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Clean {
+            get {
+                object obj = ResourceManager.GetObject("Clean", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConstructPath {
             get {
                 object obj = ResourceManager.GetObject("ConstructPath", resourceCulture);
