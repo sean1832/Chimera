@@ -10,7 +10,7 @@ namespace Chimera.Components.Data
 
         public CullDuplicates()
           : base("CullDuplicates", "CullDup",
-              "Removes duplicates from a list of data.",
+              "Removes duplicates from a list of generic data.",
               "Chimera", "Data")
         {
         }

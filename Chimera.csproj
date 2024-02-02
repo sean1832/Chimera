@@ -13,6 +13,12 @@
     <Company>$(Authors)</Company>
     <Copyright>Copyright (c) 2023-$(CurrentYear) $(Authors)</Copyright>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <Compile Remove="src\Components\Building\**" />
+    <EmbeddedResource Remove="src\Components\Building\**" />
+    <None Remove="src\Components\Building\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Grasshopper" Version="7.13.21348.13001" IncludeAssets="compile;build" />
@@ -40,15 +46,14 @@
   
 	<ItemGroup>
     <Folder Include="Resources\Context Menu\" />
-    <Folder Include="src\Components\Building\" />
   </ItemGroup>
   
   <PropertyGroup Condition="$(Configuration) == 'Debug' AND $([MSBuild]::IsOSPlatform(Windows))">
-    <StartProgram>D:\02-design\01-3D\01-Rhino\Rhino 7\System\Rhino.exe</StartProgram>
+    <StartProgram>D:\design\rhino3d\rhino7\System\Rhino.exe</StartProgram>
     <StartArguments>
 		/runscript="_-RunScript (
 		Set GH = Rhino.GetPlugInObject(""Grasshopper"")
-		Call GH.OpenDocument(""E:\Grasshopper\plugin\Chimera\ExampleGHScript\Chimera.gh"")
+		Call GH.OpenDocument(""F:\projects\Chimera\ExampleGHScript\Chimera.gh"")
 		)"</StartArguments>
     <StartAction>Program</StartAction>
   </PropertyGroup>
