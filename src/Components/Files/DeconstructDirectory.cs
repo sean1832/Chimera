@@ -18,7 +18,7 @@ namespace Chimera.Components.Files
         }
         public override GH_Exposure Exposure => GH_Exposure.primary;
         public override IEnumerable<string> Keywords => new string[] { "dedir", "deconstructdirectory" };
-        protected override System.Drawing.Bitmap Icon => null; // Properties.Resources.Icon
+        protected override System.Drawing.Bitmap Icon => Properties.Resources.DeconstructDirectory; // Properties.Resources.Icon
         public override Guid ComponentGuid => new Guid("c29c3d35-26a4-42ec-a607-bb21a27908df");
 
         #endregion

@@ -83,6 +83,16 @@ namespace Chimera.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ConstructDirectory {
+            get {
+                object obj = ResourceManager.GetObject("ConstructDirectory", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ConstructPath {
             get {
                 object obj = ResourceManager.GetObject("ConstructPath", resourceCulture);
@@ -126,6 +136,16 @@ namespace Chimera.Properties {
         internal static System.Drawing.Bitmap CurveContainment {
             get {
                 object obj = ResourceManager.GetObject("CurveContainment", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeconstructDirectory {
+            get {
+                object obj = ResourceManager.GetObject("DeconstructDirectory", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
