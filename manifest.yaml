@@ -1,0 +1,8 @@
+name: Chimera
+version: 0.0.7
+authors:
+  - Zeke Zhang
+description: Utility plugin that focus on local file/ directory manipulation,  curve simulation, and helper utilities for mesh and data sorting.
+url: https://github.com/sean1832/Chimera
+keywords:
+  - utility
