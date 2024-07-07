@@ -7,11 +7,13 @@
     <TargetExt>.gha</TargetExt>
     <LangVersion>8</LangVersion>
     <Authors>Zeke Zhang</Authors>    
-	  <Version>0.0.6.0</Version>
+	  <Version>0.0.7</Version>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>Rhino;Grasshopper</PackageTags>
     <Company>$(Authors)</Company>
     <Copyright>Copyright (c) 2023-$(CurrentYear) $(Authors)</Copyright>
+    <FileVersion>0.0.7</FileVersion>
+    <AssemblyVersion>0.0.7</AssemblyVersion>
   </PropertyGroup>
 	
   <ItemGroup>
